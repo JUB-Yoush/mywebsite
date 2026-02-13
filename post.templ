@@ -1,0 +1,36 @@
+package main
+
+import "path"
+import "github.com/gosimple/slug"
+
+templ headerComponent(title string) {
+	<head><title>{ title }</title></head>
+}
+
+templ contentComponent(post *Post) {
+	<body>
+		<h1>{ post.title }</h1>
+		<div class="content">
+			@post.html
+		</div>
+	</body>
+}
+
+templ contentPage(post *Post) {
+	<html>
+		@headerComponent(post.title)
+		@contentComponent(post)
+	</html>
+}
+
+templ indexPage(posts []Post) {
+	<html>
+		@headerComponent("My Blog")
+		<body>
+			<h1>My Blog</h1>
+			for _, post := range posts {
+				<div><a href={ templ.SafeURL(path.Join(post.date.Format("2006/01/02"), slug.Make(post.title), "/")) }>{ post.title }</a></div>
+			}
+		</body>
+	</html>
+}
