@@ -23,7 +23,8 @@ templ contentPage(post *Post) {
 	</html>
 }
 
-templ indexPage(posts []Post) {
+templ indexPage(posts []*Post) {
+    <!-- sort by date -->
 	<html>
 		@headerComponent("My Blog")
 		<body>

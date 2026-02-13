@@ -27,9 +27,6 @@ index
 		{blog posts}
 
 */
-func typeofobject(x interface{}) {
-	fmt.Sprintf("%T", x)
-}
 
 type Post struct {
 	id    string
@@ -112,6 +109,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	// make page for each post
 	posts := parseMarkdownPosts()
 	for _, post := range posts {
@@ -130,6 +128,20 @@ func main() {
 		if err != nil {
 			log.Fatalf("failed to write output file: %v", err)
 		}
+	}
+
+	name := path.Join(rootPath, "index.html")
+	f, err := os.Create(name)
+	err = boilerplate(homeContent(), "ekekek").Render(context.Background(), f)
+	if err != nil {
+		log.Fatalf("failed to create output file: %v", err)
+	}
+
+	name = path.Join(blogPath, "index.html")
+	f, err = os.Create(name)
+	err = indexPage(posts).Render(context.Background(), f)
+	if err != nil {
+		log.Fatalf("failed to create output file: %v", err)
 	}
 
 }
