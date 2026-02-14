@@ -2,22 +2,6 @@ package main
 
 templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 <style>
-	:global(*) {
-		background-color: var(--background-color);
-		color: var(--color);
-	}
-	:global(*)::selection {
-		background: var(--hover-color);
-	}
-
-	:global(a:hover) {
-		color: var(--hover-color);
-		cursor: pointer;
-	}
-	:global(a) {
-		background-color: transparent;
-		text-decoration: underline;
-	}
 	main {
 		margin-top: 15vh;
 		width: 100vw;
@@ -93,7 +77,6 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <script src={pathToRoot + "js/theme.js"}></script>
   <link rel="stylesheet" href={pathToRoot +"css/reset.css"} />
   <link rel="stylesheet" href={pathToRoot +"css/main.css"} />
   <link rel="stylesheet" href={pathToRoot +"css/font.css"} />
@@ -110,6 +93,7 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 		<a href="/projects/index.html">projects</a>
 		<a class="" href="/mail/index.html">mail list</a>
 		<a href="/blog/index.html">blog</a>
+		<a id="theme" onclick="change_theme()" >theme</a>
 	</nav>
 
 	<div class={viewClass + "content-wrapper"}>
@@ -127,6 +111,7 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 		</footer>
     </div>
 </main>
+<script src={pathToRoot + "js/theme.js"}></script>
 </html>
 }
 

@@ -9,14 +9,23 @@ if (stored_theme == null) {
 window.localStorage.setItem('theme', stored_theme)
 
 document.documentElement.setAttribute('data-theme', themes[stored_theme]);
-console.log(document.documentElement.getAttribute("data-theme"))
+
+update_theme_text()
 
 
 function change_theme() {
-    if (browser) {
-        let next_theme = (stored_theme + 1) % themes.length;
-        document.documentElement.setAttribute('data-theme', themes[stored_theme]);
-        stored_theme = next_theme
-        window.localStorage.setItem('theme', stored_theme)
-    }
+    stored_theme = (stored_theme + 1) % themes.length;
+    document.documentElement.setAttribute('data-theme', themes[stored_theme]);
+    window.localStorage.setItem('theme', stored_theme)
+    update_theme_text()
 }
+
+function update_theme_text() {
+    let themetext = document.getElementById("theme")
+    //console.log(themetext)
+    themetext.textContent = themes[stored_theme]
+}
+
+window.onload = function () {
+    update_theme_text()
+};
