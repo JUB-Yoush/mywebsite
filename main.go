@@ -214,12 +214,34 @@ func main() {
 		log.Fatalf("failed to create output file: %v", err)
 	}
 
-	// BLOGPOSTS
+	// BLOG POSTS
 	name = path.Join(blogPath, "index.html")
 	f, err = os.Create(name)
-	err = boilerplate(indexPage(posts, tags), "", "../").Render(context.Background(), f)
+	err = boilerplate(indexPage(posts, tags, "", true), "", "../").Render(context.Background(), f)
 	if err != nil {
 		log.Fatalf("failed to create output file: %v", err)
+	}
+
+	// TAG collections
+	collections := path.Join("public", "blog", "collection")
+
+	if err := os.Mkdir(collections, 0755); err != nil {
+		log.Fatalf("failed to create output directory: %v", err)
+	}
+	for _, tag := range tags {
+		collectionPath := path.Join("public", "blog", "collection", tag)
+
+		if err := os.Mkdir(collectionPath, 0755); err != nil {
+			log.Fatalf("failed to create output directory: %v", err)
+		}
+
+		name = path.Join(collectionPath, "index.html")
+		f, err = os.Create(name)
+		err = boilerplate(indexPage(posts, tags, tag, false), "", "../../../").Render(context.Background(), f)
+		if err != nil {
+			log.Fatalf("failed to create output file: %v", err)
+		}
+
 	}
 
 }
