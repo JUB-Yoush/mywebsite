@@ -27,7 +27,7 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 		margin-left: auto;
 		margin-right: auto;
 	}
-	nav {
+	.navbar {
 		padding-right: 1.5rem;
 		padding-top: 16px;
 		display: flex;
@@ -35,10 +35,10 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 		flex-direction: column;
 		text-align: right;
 	}
-	nav a {
+	.navbar a {
 		margin-bottom: 0.5rem;
 	}
-	body {
+	.content-wrapper {
 		max-width: 800px;
 		width: 60vw;
 		min-width: 320px;
@@ -46,7 +46,7 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 		flex-wrap: wrap;
 		flex-direction: column;
 	}
-	body.blog {
+	.content-wrapper.blog {
 		width: 80vw;
 		max-width: 1200px;
 	}
@@ -57,7 +57,7 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 		justify-content: center;
 		padding-bottom: 8px;
 	}
-	footer {
+	.footer-links {
 		margin-top: 8px;
 		display: flex;
 		flex-direction: column;
@@ -71,50 +71,51 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 			margin-top: min(5vh, 30px);
 			margin-left: min(5vw, 60px);
 		}
-		nav {
+		.navbar {
 			flex-direction: row;
 			text-align: left;
 			justify-content: center;
 		}
-		body {
+		.content-wrapper {
 			width: 90vw;
 		}
-		nav a {
+		.navbar a {
 			margin-right: 12px;
 		}
 	}
+
 </style>
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>HTML 5 Boilerplate</title>
+  <script src={pathToRoot + "js/theme.js"}></script>
+  <link rel="stylesheet" href={pathToRoot +"css/reset.css"} />
   <link rel="stylesheet" href={pathToRoot +"css/main.css"} />
   <link rel="stylesheet" href={pathToRoot +"css/font.css"} />
-  <link rel="stylesheet" href={pathToRoot +"css/reset.css"} />
   <link rel="stylesheet" href={pathToRoot +"css/code.css"} />
 </head>
 
 
 
 <main>
-	<nav class={viewClass}>
+	<nav class={viewClass + "navbar"}>
 		<a class="" href="/index.html">~</a>
 		<a href="/about/index.html">about</a>
-		<a href="/resume">hire me 😳</a>
-		<a href="/projects">projects</a>
-		<a class="" href="/mail">mail list</a>
-		<a href="/blog">blog</a>
+		<a href="/resume/index.html">hire me 😳</a>
+		<a href="/projects/index.html">projects</a>
+		<a class="" href="/mail/index.html">mail list</a>
+		<a href="/blog/index.html">blog</a>
 	</nav>
 
-	<div class={viewClass}>
+	<div class={viewClass + "content-wrapper"}>
 		<span>+-------------+</span>
         @content
-		<footer>
+		<footer class="footer-links">
 			<span>+-------------+</span>
 			<div>
 				<a class="" href="/contact">contact</a>
@@ -122,6 +123,7 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 				<a class="" href="https://yoush.itch.io/" target="_blank">itch.io</a>
 				<a class="" href="/rss">rss</a>
 			</div>
+			<div></div>
 		</footer>
     </div>
 </main>
@@ -129,6 +131,26 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 }
 
 templ homeContent(){
+<style>
+	
+.home_gif {
+    height: 20vw;
+    max-height: 250px;
+    min-height: 150px;
+    width: auto;
+
+}
+
+
+.box {
+    padding: 4px;
+    border-style: solid;
+    border-color: var(--color);
+    border-width: 2px;
+    margin-bottom: 1rem;
+}
+</style>
+
 <script>
 const gif_tuple = [["https://media1.tenor.com/m/MZRbDClAvOgAAAAC/capybara-bath.gif","capybara"],["https://img.itch.zone/aW1nLzEzNjI4MjU0LnBuZw==/original/11RCpN.png","There is no gif. Play Void Stranger."],["https://64.media.tumblr.com/f2d0490d0300ce46a1e7a7f15dc74165/tumblr_nbbb83YqbU1swqiquo1_500.gif","Get 8 hours of sleep"],["https://media.tenor.com/WkI4kRS7eqMAAAAM/broly-dbz-fanmade.gif","mfw 8 hours of sleep"],["https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHh5NGlvdWhrZDZqY3Q4dHhmdGF0MGEzYXNyM3M2NDNlaXc4bWZ1dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZIIyYOR6vXTGeEXTZu/giphy.gif","Check out the site's colour themes."]]
 let gif_number = Math.floor(Math.random() * gif_tuple.length)
@@ -166,11 +188,21 @@ New Graduate (or internship I guess) roles for Winter or Summer 2026.
 }
 
 templ aboutContent(){
+<style>
 
+.about-img {
+    height: 20vw;
+    max-height: 250px;
+    min-height: 150px;
+    width: fit-content;
+
+}
+</style>
 <title>About</title>
 <meta property="og:title" content="About">
+<script src="../js/about.js"> </script>
 
-<h1> ~/about_me </h1> 
+<h1 > ~/about_me </h1> 
 
 <img class="about-img" src="../img/mm.png" alt="">
 <br>
@@ -178,19 +210,26 @@ templ aboutContent(){
 <br>
 <br>
 
-I'm Jayden, a computer science student at York University.
-I'm a certified Digital Doohickey Maker to some, Software Engineer to others.
+<p>I'm Jayden, a computer science student at York University.
+I'm a certified Digital Doohickey Maker to some, Software Engineer to others.</p>
 
+<p>
 I've been in love with programming and creating with computers since modifying old Nintendo games and consoles with fan-made hacking tools (don't look for my old starmen.net account, my Earthbound hacks were very bad).
+</p>
 
+<p>
 I got my start proper with using Gamemaker 8.1 in grade 10 to make simple games, and that's when my interest in programming really began.
+</p>
 
+<p>
 Since then I've founded York's game development club ([gdyu.club](https://www.gdyu.club/)), learned full-stack development, got good at OOP, and have experience with many different tools and languages, and professional internship experience at companies like Scotiabank and Google (see my [resume!!](/resume)).
+</p>
 
+<p>
 I'm a fan of programming and creating things in many forms, and am always looking for opportunities to use code to make interesting, expressive, artistic, and cool stuff.
+</p>
 
-//When I'm not working or running my club, you can find me <a class="hobby-anchor" href="javascript:;" on:click={next_hobby}>{current_hobby}.</a>
-
+<p>When I'm not working or running my club, you can find me <a  id="hobby" class="hobby-anchor" href="javascript:;" onclick="next_hobby()">current_hobby.</a></p>
 }
 
 
@@ -215,6 +254,16 @@ templ resumeContent(){
 
 <iframe src="https://drive.google.com/file/d/1A-JDGpGSF8L1QGlRkcnYKbyuZ8CKVL3y/preview" class="resume-frame" allow="autoplay"></iframe>
 
+}
+
+templ projectContent(){
+<title>Projects</title>
+<meta property="og:title" content="Projects">
+<h1>~/projects</h1>
+<p> This page  <em>had</em> a selection of my favorite/recent projects, but it was quite outdated.</p>
+<p>I'll come up with a nicer view later, but for those interested:</p>
+<a href="https://github.com/JUB-Yoush/" target="_blank" >github</a>
+<a href="https://yoush.itch.io/" target="_blank" >itch.io</a>
 }
 
 templ mailContent(){

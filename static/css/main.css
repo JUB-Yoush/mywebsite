@@ -132,11 +132,21 @@ span {
     color: unset;
 }
 
-:global(*) {
+* {
     color: var(--color);
+    background-color: var(--background-color);
 }
 
-:global(a:hover) {
+*::selection {
+    background: var(--hover-color);
+}
+
+a {
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:hover {
     color: var(--hover-color);
 }
 
@@ -188,30 +198,6 @@ code {
     font-size: .9em;
 }
 
-/*~*/
-.home_gif {
-    height: 20vw;
-    max-height: 250px;
-    min-height: 150px;
-    width: auto;
-
-}
-
-.about-img {
-    height: 20vw;
-    max-height: 250px;
-    min-height: 150px;
-    width: auto;
-
-}
-
-.box {
-    padding: 4px;
-    border-style: solid;
-    border-color: var(--color);
-    border-width: 2px;
-    margin-bottom: 1rem;
-}
 
 .icon-link {
     position: relative;

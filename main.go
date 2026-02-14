@@ -171,6 +171,17 @@ func main() {
 		log.Fatalf("failed to create output file: %v", err)
 	}
 
+	if err := os.Mkdir("public/projects", 0755); err != nil {
+		log.Fatalf("failed to create output directory: %v", err)
+	}
+
+	name = path.Join(rootPath, "projects", "index.html")
+	f, err = os.Create(name)
+	err = boilerplate(projectContent(), "", "../").Render(context.Background(), f)
+	if err != nil {
+		log.Fatalf("failed to create output file: %v", err)
+	}
+
 	// blogpage
 	name = path.Join(blogPath, "index.html")
 	f, err = os.Create(name)
