@@ -1,4 +1,4 @@
-const themes = ['mint', 'plain', 's.berry', 'banana', 'peanut', 'grape', 'melon'];
+const themes = ['plain', 'mint', 's.berry', 'banana', 'peanut', 'grape', 'melon'];
 
 let stored_theme = window.localStorage.getItem('theme')
 
@@ -22,7 +22,6 @@ function change_theme() {
 
 function update_theme_text() {
     let themetext = document.getElementById("theme")
-    //console.log(themetext)
     themetext.textContent = themes[stored_theme]
 }
 

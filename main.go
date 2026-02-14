@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"sort"
 	"time"
 
 	"github.com/a-h/templ"
@@ -17,25 +18,32 @@ import (
 	"github.com/yuin/goldmark/parser"
 )
 
-/*
-sitemap
-index
-	about
-	projects
-	mail
-	blog
-		{blog posts}
-
-*/
-
 type Post struct {
 	id        string
 	title     string
 	permaLink string
 	tags      []string
 	date      time.Time
+	dateStr   string
 	rawMd     bytes.Buffer
 	html      templ.Component
+}
+
+type Posts []*Post
+
+var tagMap map[string]bool = make(map[string]bool)
+var tags []string
+
+func (e Posts) Len() int {
+	return len(e)
+}
+
+func (e Posts) Less(i, j int) bool {
+	return e[i].date.After(e[j].date)
+}
+
+func (e Posts) Swap(i, j int) {
+	e[i], e[j] = e[j], e[i]
 }
 
 func mdToHtml(html string) templ.Component {
@@ -78,9 +86,15 @@ func parseMarkdownPosts() (posts []*Post) {
 
 		for _, tag := range metaData["tags"].([]any) {
 			s := tag.(string)
+			if !tagMap[s] {
+				tags = append(tags, s)
+				tagMap[s] = true
+			}
+
 			post.tags = append(post.tags, s)
 		}
 
+		post.dateStr = metaData["date"].(string)
 		post.date, err = time.Parse("2006-01-02", metaData["date"].(string))
 		if err != nil {
 			log.Fatal(err)
@@ -115,6 +129,10 @@ func main() {
 
 	// make page for each post
 	posts := parseMarkdownPosts()
+	// sort posts by date oldest to newest
+	sort.Sort(Posts(posts))
+	sort.Strings(tags)
+
 	for _, post := range posts {
 		dir := path.Join(blogPath, post.date.Format("2006/01/02"), slug.Make(post.title))
 		if err := os.MkdirAll(dir, 0755); err != nil && err != os.ErrExist {
@@ -185,10 +203,21 @@ func main() {
 		log.Fatalf("failed to create output file: %v", err)
 	}
 
+	if err := os.Mkdir("public/contact", 0755); err != nil {
+		log.Fatalf("failed to create output directory: %v", err)
+	}
+
+	name = path.Join(rootPath, "contact", "index.html")
+	f, err = os.Create(name)
+	err = boilerplate(contactContent(), "", "../").Render(context.Background(), f)
+	if err != nil {
+		log.Fatalf("failed to create output file: %v", err)
+	}
+
 	// BLOGPOSTS
 	name = path.Join(blogPath, "index.html")
 	f, err = os.Create(name)
-	err = boilerplate(indexPage(posts), "", "../").Render(context.Background(), f)
+	err = boilerplate(indexPage(posts, tags), "", "../").Render(context.Background(), f)
 	if err != nil {
 		log.Fatalf("failed to create output file: %v", err)
 	}

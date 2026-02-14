@@ -19,15 +19,58 @@ templ contentPage(post *Post) {
 		@contentComponent(post)
 }
 
-templ indexPage(posts []*Post) {
+templ indexPage(posts []*Post, tags []string) {
     <!-- sort by date -->
 	<html>
+<style>
+	.blog-title {
+		font-weight: bold;
+		font-size: 1.1rem;
+	}
+	p {
+		padding-top: 8px;
+		margin-bottom: -4px;
+	}
+
+	li {
+	}
+	.inline-tag {
+		padding-right: 8px;
+	}
+	.tags {
+		padding-bottom: 8px;
+		display: flex;
+		max-width: 80vw;
+		flex-wrap: wrap;
+	}
+	.tags > a {
+		margin: 8px;
+	}
+</style>
 		@headerComponent("My Blog")
 		<body>
 			<h1>My Blog</h1>
+
+<h2>Tags:</h2>
+
+<div class="tags" >
+	<a href="/blog">all</a>
+			for _, tag := range tags {
+		<a href={"collection/"+tag}>{tag}</a>
+}
+</div>
+
+		<ul>
 			for _, post := range posts {
-				<div><a href={ templ.SafeURL(post.permaLink) }>{ post.title }</a></div>
+				<li>
+				<a class="blog-title" href={ templ.SafeURL(post.permaLink) }>{ post.title }</a>
+				<p>{post.dateStr} </p>
+				for _, tag := range post.tags {
+					<a class="inline-tag" href={"collection/"+tag}>#{tag}</a>
+				}
+				</li>
 			}
+		</ul>
 		</body>
 	</html>
 }

@@ -87,12 +87,12 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 
 <main>
 	<nav class={viewClass + " navbar"}>
-		<a class="" href="/index.html">~</a>
-		<a href="/about/index.html">about</a>
-		<a href="/resume/index.html">hire me 😳</a>
-		<a href="/projects/index.html">projects</a>
-		<a class="" href="/mail/index.html">mail list</a>
-		<a href="/blog/index.html">blog</a>
+		<a class="" href="/">~</a>
+		<a href="/about/">about</a>
+		<a href="/resume/">hire me 😳</a>
+		<a href="/projects/">projects</a>
+		<a class="" href="/mail/">mail list</a>
+		<a href="/blog/">blog</a>
 		<a id="theme" onclick="change_theme()" >theme</a>
 	</nav>
 
@@ -309,4 +309,19 @@ templ mailContent(){
  </ul>
 
 <p>I hope you can trust me!</p>
+}
+
+
+templ contactContent(){
+<h1 id="-contact">~/contact</h1>
+<h2 id="note-about-reaching-out-">Note about reaching out:</h2>
+<p>Like everyone else, I am quite busy.</p>
+<p>I only have the bandwidth to respond to inquiries that align with my interests and schedule.</p>
+<p>Thank you for understanding.</p>
+<h3 id="email-">Email:</h3>
+<p>jaydenpb at protonmail dot com (written like that to avoid spam)</p>
+<h3 id="discord-">Discord:</h3>
+<p>youshle</p>
+<h3 id="linkedin-">Linkedin:</h3>
+<p><a href="https://www.linkedin.com/in/jaydenpb/">/in/jaydenpb</a></p>
 }
