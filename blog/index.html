@@ -1,0 +1,89 @@
+<style>
+	main {
+		margin-top: 15vh;
+		width: 100vw;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.navbar {
+		padding-right: 1.5rem;
+		padding-top: 16px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		text-align: right;
+	}
+	.navbar a {
+		margin-bottom: 0.5rem;
+	}
+	.content-wrapper {
+		max-width: 800px;
+		width: 60vw;
+		min-width: 320px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+	.content-wrapper.blog {
+		width: 80vw;
+		max-width: 1200px;
+	}
+	div > span {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding-bottom: 8px;
+	}
+	.footer-links {
+		margin-top: 8px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	@media only screen and (max-width: 600px) {
+		main {
+			flex-direction: column;
+			margin-top: min(5vh, 30px);
+			margin-left: min(5vw, 60px);
+		}
+		.navbar {
+			flex-direction: row;
+			text-align: left;
+			justify-content: center;
+		}
+		.content-wrapper {
+			width: 90vw;
+		}
+		.navbar a {
+			margin-right: 12px;
+		}
+	}
+
+</style><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="../css/main.css"><link rel="stylesheet" href="../css/font.css"><link rel="stylesheet" href="../css/code.css"></head><main><nav class=" navbar"><a class="" href="/">~</a> <a href="/about/">about</a> <a href="/resume/">hire me 😳</a> <a href="/projects/">projects</a> <a class="" href="/mail/">mail list</a> <a href="/blog/">blog</a> <a id="theme" onclick="change_theme()">theme</a></nav><div class=" content-wrapper"><span>+-------------+</span><html><style>
+	.blog-title {
+		font-weight: bold;
+		font-size: 1.1rem;
+	}
+	p {
+		padding-top: 8px;
+		margin-bottom: -4px;
+	}
+
+	.inline-tag {
+		padding-right: 8px;
+	}
+	.tags {
+		display: flex;
+		max-width: 80vw;
+		flex-wrap: wrap;
+	}
+	.tags > a {
+		margin-right: 8px;
+	}
+</style><head><title>My Blog</title></head><body><h1>My Blog</h1><h3>Filter by tags:</h3><div class="tags"><a href="/blog">#all</a> <a href="collection/favorite-things">#favorite-things</a><a href="collection/game-dev">#game-dev</a><a href="collection/hackathon">#hackathon</a><a href="collection/idea">#idea</a><a href="collection/interview">#interview</a><a href="collection/japanese">#japanese</a><a href="collection/jjpa">#jjpa</a><a href="collection/productivity">#productivity</a><a href="collection/programming">#programming</a><a href="collection/reading">#reading</a><a href="collection/reflection">#reflection</a><a href="collection/review">#review</a><a href="collection/work">#work</a></div><ul><li><a class="blog-title" href="2026/01/21/favorite-things-fall-2025">Favorite Things Fall 2025</a><p>2026-01-21</p><a class="inline-tag" href="collection/favorite-things">#favorite-things</a></li><li><a class="blog-title" href="2026/01/21/jayden-journal-public-access-winter-2026">Jayden Journal Public Access: Winter 2026</a><p>2026-01-21</p><a class="inline-tag" href="collection/jjpa">#jjpa</a><a class="inline-tag" href="collection/reflection">#reflection</a></li><li><a class="blog-title" href="2025/09/02/jayden-journal-public-access-fall-2025">Jayden Journal Public Access: Fall 2025</a><p>2025-09-02</p><a class="inline-tag" href="collection/jjpa">#jjpa</a><a class="inline-tag" href="collection/reflection">#reflection</a></li><li><a class="blog-title" href="2025/09/02/favorite-things-summer-2025">Favorite Things Summer 2025</a><p>2025-09-02</p><a class="inline-tag" href="collection/favorite-things">#favorite-things</a></li><li><a class="blog-title" href="2025/08/31/double-abstraction-in-game-programming">Double Abstraction in Game Programming</a><p>2025-08-31</p><a class="inline-tag" href="collection/game-dev">#game-dev</a><a class="inline-tag" href="collection/programming">#programming</a></li><li><a class="blog-title" href="2025/07/25/stream-faq">Stream FAQ</a><p>2025-07-25</p><a class="inline-tag" href="collection/productivity">#productivity</a><a class="inline-tag" href="collection/work">#work</a></li><li><a class="blog-title" href="2025/07/11/object-orientation-polymorphic-code-organization">Object Orientation: Polymorphic Code Organization</a><p>2025-07-11</p><a class="inline-tag" href="collection/programming">#programming</a></li><li><a class="blog-title" href="2025/05/09/jayden-journal-public-access-summer-2025">Jayden Journal Public Access: Summer 2025</a><p>2025-05-09</p><a class="inline-tag" href="collection/jjpa">#jjpa</a><a class="inline-tag" href="collection/reflection">#reflection</a></li><li><a class="blog-title" href="2025/05/08/favorite-things-winter-2025">Favorite Things Winter 2025</a><p>2025-05-08</p><a class="inline-tag" href="collection/favorite-things">#favorite-things</a></li><li><a class="blog-title" href="2025/02/26/the-universal-50-rule">The Universal 50% Rule</a><p>2025-02-26</p><a class="inline-tag" href="collection/productivity">#productivity</a><a class="inline-tag" href="collection/idea">#idea</a></li><li><a class="blog-title" href="2025/01/22/favorite-things-fall-2024">Favorite Things Fall 2024</a><p>2025-01-22</p><a class="inline-tag" href="collection/favorite-things">#favorite-things</a></li><li><a class="blog-title" href="2024/12/26/jayden-journal-public-access-winter-2025">Jayden Journal Public Access: Winter 2025</a><p>2024-12-26</p><a class="inline-tag" href="collection/jjpa">#jjpa</a><a class="inline-tag" href="collection/reflection">#reflection</a></li><li><a class="blog-title" href="2024/08/22/jayden-journal-public-access-fall-2024">Jayden Journal Public Access: Fall 2024</a><p>2024-08-22</p><a class="inline-tag" href="collection/jjpa">#jjpa</a><a class="inline-tag" href="collection/reflection">#reflection</a></li><li><a class="blog-title" href="2024/08/21/26-things-i-learned-at-google">26 Things I learned at Google</a><p>2024-08-21</p><a class="inline-tag" href="collection/reflection">#reflection</a><a class="inline-tag" href="collection/work">#work</a></li><li><a class="blog-title" href="2024/07/28/a-conversation-with-robert-nystrom">A Conversation with Robert Nystrom</a><p>2024-07-28</p><a class="inline-tag" href="collection/game-dev">#game-dev</a><a class="inline-tag" href="collection/interview">#interview</a></li><li><a class="blog-title" href="2024/07/20/honing-vs-innovating-in-game-design">Honing vs Innovating in Game Design</a><p>2024-07-20</p><a class="inline-tag" href="collection/game-dev">#game-dev</a><a class="inline-tag" href="collection/idea">#idea</a></li><li><a class="blog-title" href="2024/05/26/outdated-thinking-about-game-engines">(OUTDATED) Thinking about Game Engines</a><p>2024-05-26</p><a class="inline-tag" href="collection/game-dev">#game-dev</a><a class="inline-tag" href="collection/programming">#programming</a></li><li><a class="blog-title" href="2024/05/22/jayden-journal-public-access-google-gaiden-summer-2024">Jayden Journal Public Access: Google Gaiden (Summer 2024)</a><p>2024-05-22</p><a class="inline-tag" href="collection/jjpa">#jjpa</a><a class="inline-tag" href="collection/reflection">#reflection</a></li><li><a class="blog-title" href="2024/05/21/favorite-things-spring-2024">Favorite Things Spring 2024</a><p>2024-05-21</p><a class="inline-tag" href="collection/favorite-things">#favorite-things</a></li><li><a class="blog-title" href="2024/04/07/93-days-into-learning-japanese">93 Days into learning Japanese</a><p>2024-04-07</p><a class="inline-tag" href="collection/japanese">#japanese</a><a class="inline-tag" href="collection/reflection">#reflection</a></li><li><a class="blog-title" href="2024/03/01/jayden-journal-public-access-spring-2024">Jayden Journal Public Access: Spring 2024</a><p>2024-03-01</p><a class="inline-tag" href="collection/jjpa">#jjpa</a><a class="inline-tag" href="collection/reflection">#reflection</a></li><li><a class="blog-title" href="2024/02/25/my-favorite-things-winter-2024">My Favorite Things Winter 2024</a><p>2024-02-25</p><a class="inline-tag" href="collection/favorite-things">#favorite-things</a></li><li><a class="blog-title" href="2024/02/11/the-wanting-to-debug-your-games-to-evil-doom-emacs-user-pipline">The wanting to debug your games to EVIL DOOM Emacs user pipline.</a><p>2024-02-11</p><a class="inline-tag" href="collection/game-dev">#game-dev</a><a class="inline-tag" href="collection/programming">#programming</a></li><li><a class="blog-title" href="2023/12/02/jayden-journal-public-access-winter-2024">Jayden Journal Public Access: Winter 2024</a><p>2023-12-02</p><a class="inline-tag" href="collection/jjpa">#jjpa</a><a class="inline-tag" href="collection/reflection">#reflection</a></li><li><a class="blog-title" href="2023/10/26/how-i-study">How I Study</a><p>2023-10-26</p><a class="inline-tag" href="collection/productivity">#productivity</a></li><li><a class="blog-title" href="2023/10/17/book-review-1">Book Review #1</a><p>2023-10-17</p><a class="inline-tag" href="collection/reading">#reading</a><a class="inline-tag" href="collection/review">#review</a></li><li><a class="blog-title" href="2023/09/25/a-review-of-hack-the-north-2023-but-also-just-general-hackathon-tips">A Review of Hack the North 2023 but also just general Hackathon tips</a><p>2023-09-25</p><a class="inline-tag" href="collection/hackathon">#hackathon</a><a class="inline-tag" href="collection/reflection">#reflection</a></li></ul></body></html><footer class="footer-links"><span>+-------------+</span><div><a class="" href="/contact">contact</a> <a class="" href="https://github.com/JUB-Yoush" target="_blank">github</a> <a class="" href="https://yoush.itch.io/" target="_blank">itch.io</a> <a class="" href="/">rss (TODO)</a></div><div></div></footer></div></main><script src="../js/theme.js"></script></html>

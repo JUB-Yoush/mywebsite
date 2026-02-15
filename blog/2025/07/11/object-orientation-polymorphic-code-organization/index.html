@@ -1,0 +1,374 @@
+<style>
+	main {
+		margin-top: 15vh;
+		width: 100vw;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.navbar {
+		padding-right: 1.5rem;
+		padding-top: 16px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		text-align: right;
+	}
+	.navbar a {
+		margin-bottom: 0.5rem;
+	}
+	.content-wrapper {
+		max-width: 800px;
+		width: 60vw;
+		min-width: 320px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+	.content-wrapper.blog {
+		width: 80vw;
+		max-width: 1200px;
+	}
+	div > span {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding-bottom: 8px;
+	}
+	.footer-links {
+		margin-top: 8px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	@media only screen and (max-width: 600px) {
+		main {
+			flex-direction: column;
+			margin-top: min(5vh, 30px);
+			margin-left: min(5vw, 60px);
+		}
+		.navbar {
+			flex-direction: row;
+			text-align: left;
+			justify-content: center;
+		}
+		.content-wrapper {
+			width: 90vw;
+		}
+		.navbar a {
+			margin-right: 12px;
+		}
+	}
+
+</style><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><link rel="stylesheet" href="../../../../../css/reset.css"><link rel="stylesheet" href="../../../../../css/main.css"><link rel="stylesheet" href="../../../../../css/font.css"><link rel="stylesheet" href="../../../../../css/code.css"></head><main><nav class="blog navbar"><a class="" href="/">~</a> <a href="/about/">about</a> <a href="/resume/">hire me 😳</a> <a href="/projects/">projects</a> <a class="" href="/mail/">mail list</a> <a href="/blog/">blog</a> <a id="theme" onclick="change_theme()">theme</a></nav><div class="blog content-wrapper"><span>+-------------+</span><head><title>Object Orientation: Polymorphic Code Organization</title></head><body><h1>Object Orientation: Polymorphic Code Organization</h1><div class="content"><p><a href="https://youtu.be/RqVGdCD4Rgg?si=BeiitIeqpUVA0V3B">Expedition 33 is phenomenal, but you've already heard that from someone else.</a></p>
+<p>A fundamental problem software engineers run into is organizing polymorphic data. That is, datatypes that share some similar data but also do other things differently. We're given quite a lot of flexibility in how to approach problems based on tools in a given language, so It can be difficult to come up with the &quot;best&quot; way to go about modeling or representing our code, especially if it's a new problem you've never solved before.</p>
+<p>This post summarizes the different approaches I've become familiar with, and the considerations and trade offs one would make when considering one.</p>
+<p>I'm going to start off simple and slowly discuss different aspects using concepts that might be new to you, if anything discussed here is as interesting to you as it is to me, I implore you to look into it yourself.</p>
+<p>Let's say you're making a geometry library. You have Rectangle and Triangle classes that can both calculate the area of themselves.</p>
+<p>If you've ever written any object oriented code, you'd know how to solve this: Make an abstract parent class &quot;Shape&quot; with abstract class for <code>area()</code>, and have each Shape extend from it.</p>
+<p>(All code examples will be in C#)</p>
+<pre><code class="language-C#">public abstract class Shape(float width, float length)  {
+ float length = length;
+ float width = width;
+
+ public abstract float area();
+
+}
+
+class Rectangle(float width, float length) : Shape
+{
+    public override float area(){
+    return width * length
+    }
+}
+
+class Triangle(float width, float length) : Shape
+{
+    public override float area(){
+    return width * length * 0.5
+    }
+}
+
+</code></pre>
+<p>Simple!</p>
+<p>But I don't know if you've heard... object oriented programming is LAME actually. Java blew up and started selling out shows at the Rogers Center, so now it's cool to not like them. Clearly all these 45 year old suit and tie Netbeans programmers have no idea what good music is. In between taking turns participating in our favorite hobby (shoving SOLID principles into lockers) you might be interested in actually learning where criticisms of OOP come from?</p>
+<p>The Two primary concerns are:</p>
+<ol>
+<li>OOP encourages abstraction that can lead to coupling and messy codebases.</li>
+<li>Pointer indirection, Cache locality, and vtables make objects slower than plain structs.</li>
+</ol>
+<p>I am only considering the first one in this post. Originally I covered both but was easily clearing the 5000 word mark.</p>
+<h1>Inheritance is (able to become) messy</h1>
+<h2>Abstraction inherently causes coupling</h2>
+<p>Inheritance tightly couples child classes to parent classes. The Shape example I demonstrated seems quite benign (because it is), but more complex hierarchies can come with issues. Changes to the parent class propagate down the abstraction tree, and if a child doesn't perfectly fit what the parent class had designed, then you need to refactor the entire section of the tree, and all the nodes that extended from that branch. Abstraction is about making assumptions about what your code will need. If the abstraction was correct then you saved yourself repeating code. If they aren't then you'll need to modify your assumptions to fit. The issue isn't inheritance inherently (get it), but the tight coupling of code. Some modern &quot;Post-OOP&quot; languages like Rust and Go don't have inheritance at all, however they do have abstraction through interfaces.</p>
+<h2>Interfaces</h2>
+<p>Interfaces are contracts that an abiding class must fulfill. They're like a abstract class but they only define functions any &quot;child&quot; would have. Unlike inheritance with classes, you can implement an unlimited number of interfaces from multiple sources, which allows you to make lots of small and modular interfaces that a class can pick and choose to specify behavior.</p>
+<p>Lets say we also wanted to support circles, it'd make no sense for circles to extend the shape class, as it has no width nor length, but we can pass in the shape interface which is only concerned about whatever type it's referencing having an area() function that matches it's forward declaration. We can refactor our example to work based on an interface instead of an inherited class.</p>
+<pre><code class="language-C#">public interface Shape() {
+ public virtual float area();
+
+}
+
+class Rectangle(float width, float length) : Shape
+{
+    public float width = width;
+    public float length = length;
+    public float area(){
+    return width * length
+    }
+}
+
+class Triangle(float width, float length) : Shape
+{
+    public float width = width;
+    public float length = length;
+    public float area(){
+    return width * length * 0.5
+    }
+}
+</code></pre>
+<p>Breaking things up from large connected components into smaller modular components is the heart behind the phrase &quot;favor composition over inheritance&quot;. The functionality of a class isn't the only thing we can modularize, we can also modularize the members of the class itself through dependency injection.</p>
+<h2>Dependency Injection</h2>
+<p>Dependency Injection Sounds much more complicated than it actually is. Instead of data being provided to a class through it's inherited parent, you simply include the data. I originally learned about this pattern when making games using <a href="https://bevy.org/">Bevy</a>, as it uses a inheritance-less entity component system for your games data.</p>
+<p>Lets say you're making a game and have a entity base class with a sprite and position. If you were using something inheritance based, like Godot, that data would look something like:</p>
+<pre><code class="language-C#">class Position{
+ float x;
+ float y;
+}
+
+class Sprite: Position{
+ byte[] imgData;
+ bool flipX = false;
+ bool flipY = false;
+ bool centered = false;
+}
+
+class Entity: Sprite{
+ int entity_id;
+}
+
+class Player: Entity{
+// player specific things
+}
+
+</code></pre>
+<p>This is sort of how the inheritance hierarchy for Godot's Nodes is set up. It makes assumptions about the kind of data a class is interested in having. This can lead to the same coupling issues we had just discussed.</p>
+<p>A Dependency injection based approach would be the following:</p>
+<pre><code class="language-C#">class Position{
+float x;
+float y;
+}
+
+class Entity{
+int entityId;
+}
+
+class Sprite{
+byte[] imgData;
+bool flipX = false;
+bool flipY = false;
+bool centered = false;
+}
+
+class Player{
+ Entity entity;
+ Sprite sprite;
+ Position position;
+ // player specific things
+}
+</code></pre>
+<p>Your classes are now composed of atomic classes that can be composed. DI does to your members what interfaces did to your functionality. This solution allows you to not have to make assumptions about the other kinds of data a class would want, as any class simply gets any data it wants passed in.</p>
+<h2>A word on functional(ish) programming</h2>
+<p>Functional Programming is a type of programming focused on only using &quot;pure&quot; functions. A &quot;pure&quot; function is one without &quot;side-effects&quot;, meaning:</p>
+<ol>
+<li><strong>The same input will always yield the same output.</strong></li>
+<li><strong>Nothing outside of the passed in data is modified</strong>.</li>
+</ol>
+<p>Think only using static functions with no static variables.</p>
+<p>In FP you also (generally) only operate on immutable data. meaning all values need to be updated and returned instead of modifying by a passed in reference. Functional languages like <a href="https://en.wikipedia.org/wiki/ML_(programming_language)">ML</a>, <a href="https://www.haskell.org/">Haskell</a>, <a href="https://elixir-lang.org/">Elixir</a>, or <a href="https://ocaml.org/">Ocaml</a> are expressly written in this style and have extremely unfamilar syntax to those who've only really used C-like languages. However lots of non-functional languages have functional language features or can be written in a functional style.</p>
+<p>Functional programming relies on a separation between your data and functions that operate on that data. That might sound like a very different architectural approach, until you understand it's mostly the difference between this:</p>
+<pre><code class="language-C#">// OOP based
+class Rectangle(float width, float length)
+{
+    float width = width;
+    float length = length;
+
+ public setDimensions(float w, float l){
+  //updates existing rectangle values (mutable)
+  width = w;
+  length = l;
+ }
+}
+
+public static void Main(){
+ Rectangle r = new Rectangle(3,4);
+ r.setDimensions(4,5);
+}
+</code></pre>
+<p>and this:</p>
+<pre><code class="language-C#">// Functionalish
+class Rectangle(float width, float length)
+{
+    float width = width;
+    float length = length;
+
+}
+
+// &quot;pure&quot; function
+static class RectangleHandler(){
+ public static Rectangle ChangeDimensions(float w, float l){
+  //return new rectangle instead of modifying value (immutability)
+  return new Rectangle(w,l)
+ }
+}
+
+public static void Main(){
+ Rectangle r = new Rectangle(3,4);
+ r = Rectangle.ChangeDimensions(4,5);
+}
+</code></pre>
+<p>Then at that point you might think it's a completely pedantic and worthless distinction, (languages like Go convert all your methods into functional calls at compile time) but it's not!</p>
+<h3>How to think about functional programming</h3>
+<p>You can think of any set of polymorphic data as a table. <strong>The rows are the different types</strong>, and <strong>the columns are the different methods they implement</strong>. - In OOP, when we add a new datatype we append a new <strong>row</strong> to the table and create methods in that class to handle all of the new interface's methods. - In functional programming, we simply create a object as a data container with no functionality, and then in every function that handles every type, we add a new case to our switch statement that handles that new datatype, adding a <strong>column</strong> to the table. This &quot;do a different thing based on every datatype&quot; is known as pattern matching.
+Each method has a different &quot;grain&quot; to it. You either add a new column and handle every row or add a new row and handle every column. This table metaphor was the thing that helped me understand the fundamental differences between OOP and FP paradigms, I learned about the idea in the <a href="https://craftinginterpreters.com/representing-code.html#the-expression-problem">crafting interpreters</a> which is a great book that walks you through implementing a programming language, free to read online! Big recommend!</p>
+<p>Lets try to make our shape example more functional using pattern matching in C#:</p>
+<pre><code class="language-C#">public interface Shape { }
+
+class Rectangle(float width, float length) : Shape
+{
+    public float width = width;
+    public float length = length;
+}
+
+class Triangle(float base, float length) : Shape
+{
+    public float base = base;
+    public float length = length;
+}
+
+class Circle(float radius) : Shape
+{
+    public float radius = radius;
+}
+
+static class ShapeHandler
+{
+    public static float calcualteArea(Shape s)
+    {
+        return s switch
+        {
+            Rectangle r =&gt; r.width * r.length,
+            Triangle t =&gt; 0.5 * t.base * t.height,
+            Circle c =&gt; (float)Math.Pow(Math.PI * c.radius, 2),
+        };
+    }
+}
+
+</code></pre>
+<p>It might seem odd that we're still implementing the shape interface despite it not doing anything. The Shape interface now simply acts as a &quot;union&quot; of different types that we want to potentially handle, and C# will only let us implicitly convert types that implement the interface. Functional languages have lots more features to support this kind of programming. but depending on your language a lot of functional ideas can be applied to non functional languages.</p>
+<p>Pattern matching for every new case can become annoying when we have a lot of new functions to implement, what if we wanted to return the perimeter of the shape? or turn it 3d? add hexagons or rhombuses? we'd have to loop over every type in every function that implements a shape. But we have solutions for that too:</p>
+<h3>Function pointers</h3>
+<p>How does inheritance work? Not conceptually, but to the compiler? If I have a child class that overrides a parent function, or a class that overrides and implements an interfaces function, how does the compiler know what function to use when I call the abstract <code>shape.area()</code> ?
+Classes have what is called a &quot;virtual function table&quot; or &quot;vtable&quot;. This is a lookup table that the compiler can reference to figure out what version of a function an object is referring to. Classes automatically contain data that reference a function to call. However in a functional style with no abstraction we'd need to implement this behavior ourselves through the <code>calculateArea()</code> function, acting as a manually implemented vtable.</p>
+<p>The vtable effectively stores a function as a variable that is a part of an object. What's stopping us from doing that ourselves? We can dependency inject that data into the class ourselves and sidestep abstraction altogether. Lets try storing a function as a parameter in a concrete class, to emulate abstraction we can use a enum of different &quot;types&quot; the class could be so we know which function to call.</p>
+<p>Instead of pattern matching for every possible condition, we can simply pass in all the relevant functions on the objects creation, and call whatever function it has within it.</p>
+<pre><code class="language-C#">public enum ShapeType
+{
+    RECTANGLE,
+    CIRCLE,
+    TRIANGLE,
+}
+
+public class Shape(ShapeType id, Func&lt;Shape, float&gt; areaFn)
+{
+    public ShapeType id = id;
+    public Func&lt;Shape, float&gt; areaFn = areaFn;
+    public float width;
+    public float length;
+    public float radius;
+
+    public static Shape MakeShape(ShapeType id)
+    {
+        return id switch //pattern match once to pass in the correct function.
+        {
+            ShapeType.RECTANGLE =&gt; new(ShapeType.RECTANGLE, RectangleArea),
+            ShapeType.CIRCLE =&gt; new(ShapeType.CIRCLE, CircleArea),
+            ShapeType.TRIANGLE =&gt; new(ShapeType.TRIANGLE, TriangeArea),
+        };
+    }
+
+    public static float RectangleArea(Shape r)
+    {
+        return r.width * r.length;
+    }
+
+    public static float TriangeArea(Shape t)
+    {
+        return (float)0.5 * t.width * t.length;
+    }
+
+    public static float CircleArea(Shape c)
+    {
+        return (float)Math.Pow(Math.PI * c.radius, 2);
+    }
+
+    public static void Main(string[] args)
+    {
+        Shape r = Shape.MakeShape(ShapeType.RECTANGLE);
+        Console.WriteLine(r.areaFn(r)); // call whatever stored function was given at costruction time.
+    }
+}
+</code></pre>
+<p>I wrapped object initialization into a static factory function (yeah, that's the factory method, I know some design patterns! Gang of 4 baby! Agile! Sprint!? Story points???)</p>
+<p>We also need to pass in the variable into itself, as The object calls a static method and passes itself into it. You could potentially get away with using a method through initializing the variable in one line and referencing the function pointer in the second using itself. But I don't really mind.</p>
+<p>This solution forces us to implement a single concrete type, which means we'd need to have all the parameters of all possible types within a single class. This could get quite complex and hard to organize based on the number of different types you have and how many different parameters they share with each other, but this is how you'd implement interfaces/abstract classes in a &quot;procedural&quot; language with no abstraction features like C, Zig or Odin.</p>
+<h3>My rules for OOP hierarchies I try to follow</h3>
+<ul>
+<li>Prefer interfaces over inheritance.</li>
+<li>Prefer dependency injection over inheritance.</li>
+<li>Keep all inheritable classes abstract.</li>
+<li>Never use grandparent classes, keep all inheritance only one level.</li>
+<li>When to use inheritance vs a function pointer:
+<ul>
+<li>Use inheritance when child classes implement a lot more behavior than the abstract parent (and you want references to specific members).</li>
+<li>If the abstract parent implements most of the behavior, use a function pointer for any polymorphic behavior.</li>
+</ul>
+</li>
+</ul>
+<h2>OOP: The bottom line</h2>
+<p>OOP encourages modeling environments based on our intuitive understanding of how it'd works, and then use the capabilities you designed in that system to solve problems and implement the requirements of your program.</p>
+<p>Instead of managing the overhead of a systems in our brain, we front-load that work and design a high level abstract model that we can use to solve the problems through. <code>class Student extends Person</code> because we understand students to also be people. This isn't inherently bad, abstraction is all over software engineering and computing after all. If we never got any more high level we'd still all be handing reams of punch-cards to secretaries.</p>
+<p>But abstraction isn't free. Ignoring performance concerns, the more abstraction you add to your systems the more assumptions you make about how things fit together. More abstraction leads to more assumptions which leads to more coupling. These assumptions can be wrong and will cause you to have to untangle your spaghetti code. Note that this isn't inherit to OOP, you can make responsibility organized OOP based codebases, just as you can make difficult to maintain code in a functional language.</p>
+<p>OOP encourages you model a problem first, then use the model to solve the problem second.</p>
+<p>An inversion of this would be the old school &quot;procedural&quot; programming style of just writing code that solves the problems directly, due to there simply not being a lot of built in abstraction features available in simple procedural languages. After you start implementing solutions, you then can start to observe common/shared behavior between features that can be abstracted. You solve the problems first then create the model second.</p>
+<p>Software Engineer and Game Programmer Casey Muratori coined the phrase <a href="https://caseymuratori.com/blog_0015">&quot;semantic compression&quot;</a> based on this style. You act as a human compression algorithm, finding pieces of functionality that can be compressed into commonly shared pieces, only abstracting something after you've used it twice and observe it can be compressed. It isn't necessarily about not using objects or interfaces or inheritance, it's about using them when they make sense to based on what you've observed about the codebase.</p>
+<p>Big detailed UML diagrams plot too specific of a course towards what we think is the API that will best accomplish the set of requirements we're after. If we've never made that thing before then it's very hard to know what form the final code will take.</p>
+<p>Unlike other types of engineering, software is extremely cheap to refactor after we've begun building. Large detailed blueprints of buildings are made not because that's the best way to go about designing a building, but because civil engineers and architects need to lock in all decisions before construction (their compiler) can start building what they described.</p>
+<p>Being able to write code quickly, that solves problems directly, and then figuring out the best models to represent your code as you make it is a benefit many software engineers take for granted but don't seem to take advantage of.</p>
+<p>Casey in his blog post writes:</p>
+<blockquote>
+<p>&quot;make your code usable before you try to make it reusable&quot;.</p>
+</blockquote>
+<p>and</p>
+<blockquote>
+<p>&quot;The fallacy of “object-oriented programming” is exactly that: that code is at all “object-oriented”. It isn’t. Code is procedurally oriented, and the “objects” are simply constructs that arise that allow procedures to be reused. So if you just let that happen instead of trying to force everything to work backwards, programming becomes immensely more pleasant.&quot;</p>
+</blockquote>
+<p>If that all sounds too vauge and nonspecific then:</p>
+<ul>
+<li>Write down all the requirements of your program.</li>
+<li>Write your code as simply as possible to solve the first requirement without considering how it'll fit into the rest of the requirements,</li>
+<li>Get it to work!</li>
+<li>Try to implement another requirement.</li>
+<li>Did the second thing do anything similarly to the first thing?</li>
+<li>If so, compress the first and second thing into some reusable components</li>
+<li>Repeat!</li>
+</ul>
+<p>And I think this philosophy of only trying to abstract things once they present themselves as abstractable is valuable in things outside of programming, in projects of various disciplines we tend to think of high level conceptual origination of things without considering the specifics of how it'll actually be implemented. Not only can it make the project feel more complicated then it has to be, but it's also can turn into a form of &quot;metaworking&quot; based procrastination. The easiest way to get started is to just start making the thing, regardless of if it's a piece of software or a painting or a song or a blog post. So start making things! Now!</p>
+<p>Next post will be all about the performance related stuff I skipped.</p>
+<p>Get your <a href="https://youtu.be/rX0ItVEVjHc?si=6uevKg9T4wkR4--D">Hawaiian Shirts</a> ready.</p>
+</div></body><footer class="footer-links"><span>+-------------+</span><div><a class="" href="/contact">contact</a> <a class="" href="https://github.com/JUB-Yoush" target="_blank">github</a> <a class="" href="https://yoush.itch.io/" target="_blank">itch.io</a> <a class="" href="/">rss (TODO)</a></div><div></div></footer></div></main><script src="../../../../../js/theme.js"></script></html>

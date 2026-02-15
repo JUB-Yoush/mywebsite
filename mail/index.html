@@ -1,0 +1,68 @@
+<style>
+	main {
+		margin-top: 15vh;
+		width: 100vw;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.navbar {
+		padding-right: 1.5rem;
+		padding-top: 16px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		text-align: right;
+	}
+	.navbar a {
+		margin-bottom: 0.5rem;
+	}
+	.content-wrapper {
+		max-width: 800px;
+		width: 60vw;
+		min-width: 320px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+	.content-wrapper.blog {
+		width: 80vw;
+		max-width: 1200px;
+	}
+	div > span {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding-bottom: 8px;
+	}
+	.footer-links {
+		margin-top: 8px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	@media only screen and (max-width: 600px) {
+		main {
+			flex-direction: column;
+			margin-top: min(5vh, 30px);
+			margin-left: min(5vw, 60px);
+		}
+		.navbar {
+			flex-direction: row;
+			text-align: left;
+			justify-content: center;
+		}
+		.content-wrapper {
+			width: 90vw;
+		}
+		.navbar a {
+			margin-right: 12px;
+		}
+	}
+
+</style><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="../css/main.css"><link rel="stylesheet" href="../css/font.css"><link rel="stylesheet" href="../css/code.css"></head><main><nav class=" navbar"><a class="" href="/">~</a> <a href="/about/">about</a> <a href="/resume/">hire me 😳</a> <a href="/projects/">projects</a> <a class="" href="/mail/">mail list</a> <a href="/blog/">blog</a> <a id="theme" onclick="change_theme()">theme</a></nav><div class=" content-wrapper"><span>+-------------+</span><title>About</title><meta property="og:title" content="Mail"><h1>~/mail</h1><h2>Let me send you mail (please)!</h2><p>I was trying to set up a self hosting mailing list, but setting up a mailserver, and everything else involved was a lot of work for something that could end up being used by like 5 people.</p><p>I'm not the biggest fan of SAAS conceptually (I enjoy owning and being in control of my tech), but [buttondown](https://buttondown.com/) seems pretty good actually, So I'll go with them for now.</p><p>So let me send you mail!</p><hr><br><h2>SIGN UP FORM: </h2><form action="https://buttondown.com/api/emails/embed-subscribe/jaydenpb" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/jaydenpb', 'popupwindow')" class="embeddable-buttondown-form"><label for="bd-email">Email:</label> <input type="email" name="email" id="bd-email"> <input type="submit" value="Subscribe"></form><br><hr><h2>FAQ </h2><h3>Why do I want to send you mail?</h3><p>I wanted a way to publicly announce/share things on a system that I had control over. I didn't want to be beholden to an algorithm determining if people got my messages, or put my eggs in the basket of some platform that may not be around in a few years.</p><p>Email is utilitarian and boring, and the most boring and practical technology seem to stick around the longest. If I want to grow a stable and consistent group of people who are interested in being interested in the same things I'm interested in, an email list seems like the sensible option.</p><h3>What will I send, how often will I send it?</h3><p>The mailing list will primarily be a way to notify people when new blog post or other interesting things I make release. I could also potentially do a Tom Scott style "here are cool things I checked out and recommend" as well.</p><p>I'll probably send one out perhaps every 2 months? I wouldn't want to make it too often and annoy people. If there's something special I'd like to share/announce then I might include an extra one outside that schedule.</p><p>I would've also wanted to have different tiers of subscribers, from "Send me an annual update" to "Send me anything whenever man I don't even care like-" but that'll have to wait until if/when I decide to upgrade buttondown tiers.</p><h3>What if I end up doing x and breaking your trust?</h3><p>I solemnly vow to never:</p><ul><li>Sign someone up without their consent.</li><li>Post the output of an LLM</li><li>Sell your email or other information.</li><li>Do anything to make the experience of the mail subscriber worse for personal gain.</li></ul><p>I hope you can trust me!</p><footer class="footer-links"><span>+-------------+</span><div><a class="" href="/contact">contact</a> <a class="" href="https://github.com/JUB-Yoush" target="_blank">github</a> <a class="" href="https://yoush.itch.io/" target="_blank">itch.io</a> <a class="" href="/">rss (TODO)</a></div><div></div></footer></div></main><script src="../js/theme.js"></script></html>
