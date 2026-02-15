@@ -1,4 +1,4 @@
-  name: Deploy Go + templ site to gh-pages
+name: Deploy Go + templ site to gh-pages
 on:
   push:
     branches: [ main ]
