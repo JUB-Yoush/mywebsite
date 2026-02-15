@@ -1,7 +1,5 @@
-Bespoke ssg for jaydenpb.net
+Bare minimum ssg for my blog https://jaydenpb.net/
 
-Uses Go and Templ
+Uses go, templ, goldmark, and slug.
 
-Wrote it as an excuse to learn Go and because my existing site was quite complex (sveltekit). 
-
-Run ``main.go`` to generate the website and serve the files in the ``public`` created folder
+site is built into the ``public`` folder, look at deploy.yml for more info (just generate the templ files and build the go binary really).
