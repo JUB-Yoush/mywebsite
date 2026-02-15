@@ -18,6 +18,8 @@ import (
 	"github.com/yuin/goldmark/parser"
 )
 
+type TemplTemplate func() templ.Component
+
 type Post struct {
 	id        string
 	title     string
@@ -27,6 +29,12 @@ type Post struct {
 	dateStr   string
 	rawMd     bytes.Buffer
 	html      templ.Component
+}
+
+type Page struct {
+	pathStr            string
+	relativePathToRoot string
+	template           TemplTemplate
 }
 
 type Posts []*Post
@@ -107,32 +115,52 @@ func parseMarkdownPosts() (posts []*Post) {
 	}
 	return posts
 }
+func GenerateStaticPage(pathStr, relativePathToRoot string, template TemplTemplate, makeFolder bool) {
+	if makeFolder {
+		if err := os.Mkdir(pathStr, 0755); err != nil {
+			log.Fatalf("failed to create output directory: %v", err)
+		}
+	}
+
+	name := path.Join(pathStr, "index.html")
+	f, err := os.Create(name)
+	err = boilerplate(template(), "", relativePathToRoot).Render(context.Background(), f)
+	if err != nil {
+		log.Fatalf("failed to create output file: %v", err)
+	}
+}
 
 func main() {
 	rootPath := "public"
 	blogPath := "public/blog"
-	aboutPath := "public/about"
 	staticPath := "static"
 
-	// wipe public folder
+	// wipe public folder (should a makefile handle this?)
 	os.RemoveAll(rootPath)
 
 	if err := os.Mkdir(rootPath, 0755); err != nil {
 		log.Fatalf("failed to create output directory: %v", err)
 	}
 
-	// TODO get rootpath to reference files in staticpath instead of copying them over
 	err := os.CopyFS(rootPath, os.DirFS(staticPath))
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	//non blog pages
+	GenerateStaticPage(rootPath, "", homeContent, false)
+	GenerateStaticPage(path.Join(rootPath, "about"), "../", aboutContent, true)
+	GenerateStaticPage(path.Join(rootPath, "resume"), "../", resumeContent, true)
+	GenerateStaticPage(path.Join(rootPath, "mail"), "../", mailContent, true)
+	GenerateStaticPage(path.Join(rootPath, "projects"), "../", projectContent, true)
+	GenerateStaticPage(path.Join(rootPath, "contact"), "../", contactContent, true)
 
 	// make page for each post
 	posts := parseMarkdownPosts()
 	// sort posts by date oldest to newest
 	sort.Sort(Posts(posts))
 	sort.Strings(tags)
-
+	// every blog post
 	for _, post := range posts {
 		dir := path.Join(blogPath, post.date.Format("2006/01/02"), slug.Make(post.title))
 		if err := os.MkdirAll(dir, 0755); err != nil && err != os.ErrExist {
@@ -151,78 +179,15 @@ func main() {
 		}
 	}
 
-	// TODO this could be automated somewhat
-	name := path.Join(rootPath, "index.html")
+	// // BLOG index page (all)
+	name := path.Join(blogPath, "index.html")
 	f, err := os.Create(name)
-	err = boilerplate(homeContent(), "", "").Render(context.Background(), f)
+	err = boilerplate(blogPostsContent(posts, tags, "", true), "", "../").Render(context.Background(), f)
 	if err != nil {
 		log.Fatalf("failed to create output file: %v", err)
 	}
 
-	if err := os.Mkdir(aboutPath, 0755); err != nil {
-		log.Fatalf("failed to create output directory: %v", err)
-	}
-
-	name = path.Join(rootPath, "about", "index.html")
-	f, err = os.Create(name)
-	err = boilerplate(aboutContent(), "", "../").Render(context.Background(), f)
-	if err != nil {
-		log.Fatalf("failed to create output file: %v", err)
-	}
-
-	if err := os.Mkdir("public/resume", 0755); err != nil {
-		log.Fatalf("failed to create output directory: %v", err)
-	}
-
-	name = path.Join(rootPath, "resume", "index.html")
-	f, err = os.Create(name)
-	err = boilerplate(resumeContent(), "", "../").Render(context.Background(), f)
-	if err != nil {
-		log.Fatalf("failed to create output file: %v", err)
-	}
-
-	if err := os.Mkdir("public/mail", 0755); err != nil {
-		log.Fatalf("failed to create output directory: %v", err)
-	}
-
-	name = path.Join(rootPath, "mail", "index.html")
-	f, err = os.Create(name)
-	err = boilerplate(mailContent(), "", "../").Render(context.Background(), f)
-	if err != nil {
-		log.Fatalf("failed to create output file: %v", err)
-	}
-
-	if err := os.Mkdir("public/projects", 0755); err != nil {
-		log.Fatalf("failed to create output directory: %v", err)
-	}
-
-	name = path.Join(rootPath, "projects", "index.html")
-	f, err = os.Create(name)
-	err = boilerplate(projectContent(), "", "../").Render(context.Background(), f)
-	if err != nil {
-		log.Fatalf("failed to create output file: %v", err)
-	}
-
-	if err := os.Mkdir("public/contact", 0755); err != nil {
-		log.Fatalf("failed to create output directory: %v", err)
-	}
-
-	name = path.Join(rootPath, "contact", "index.html")
-	f, err = os.Create(name)
-	err = boilerplate(contactContent(), "", "../").Render(context.Background(), f)
-	if err != nil {
-		log.Fatalf("failed to create output file: %v", err)
-	}
-
-	// BLOG POSTS
-	name = path.Join(blogPath, "index.html")
-	f, err = os.Create(name)
-	err = boilerplate(indexPage(posts, tags, "", true), "", "../").Render(context.Background(), f)
-	if err != nil {
-		log.Fatalf("failed to create output file: %v", err)
-	}
-
-	// TAG collections
+	// TAG collections pages
 	collections := path.Join("public", "blog", "collection")
 
 	if err := os.Mkdir(collections, 0755); err != nil {
@@ -237,7 +202,7 @@ func main() {
 
 		name = path.Join(collectionPath, "index.html")
 		f, err = os.Create(name)
-		err = boilerplate(indexPage(posts, tags, tag, false), "", "../../../").Render(context.Background(), f)
+		err = boilerplate(blogPostsContent(posts, tags, tag, false), "", "../../../").Render(context.Background(), f)
 		if err != nil {
 			log.Fatalf("failed to create output file: %v", err)
 		}

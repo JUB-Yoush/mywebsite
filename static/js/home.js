@@ -17,7 +17,3 @@ function change_gif() {
     document.getElementById("gif_caption").textContent = gif_tuple[gif_number][1]
 
 }
-
-window.onload = function () {
-    set_gif()
-};

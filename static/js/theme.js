@@ -25,6 +25,6 @@ function update_theme_text() {
     themetext.textContent = themes[stored_theme]
 }
 
-window.onload = function () {
-    update_theme_text()
-};
+// window.onload = function () {
+//     update_theme_text()
+// };

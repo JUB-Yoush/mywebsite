@@ -21,9 +21,8 @@ templ contentPage(post *Post) {
 		@contentComponent(post)
 }
 
-templ indexPage(posts []*Post, tags []string, singleTag string, renderTags bool) {
-    <!-- sort by date -->
-	<html>
+templ blogPostsContent(posts []*Post, tags []string, singleTag string, renderTags bool) {
+<html>
 <style>
 	.blog-title {
 		font-weight: bold;
@@ -34,19 +33,16 @@ templ indexPage(posts []*Post, tags []string, singleTag string, renderTags bool)
 		margin-bottom: -4px;
 	}
 
-	li {
-	}
 	.inline-tag {
 		padding-right: 8px;
 	}
 	.tags {
-		padding-bottom: 8px;
 		display: flex;
 		max-width: 80vw;
 		flex-wrap: wrap;
 	}
 	.tags > a {
-		margin: 8px;
+		margin-right: 8px;
 	}
 </style>
 		@headerComponent("My Blog")
@@ -81,8 +77,4 @@ templ indexPage(posts []*Post, tags []string, singleTag string, renderTags bool)
 		</ul>
 		</body>
 	</html>
-}
-
-templ collectionsPage(posts []*Posts, tag string){
-
 }
