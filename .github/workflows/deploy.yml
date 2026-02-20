@@ -38,7 +38,7 @@ jobs:
       - name: Build generator binary
         run: go build -o ./tmp/main .
 
-      - name: (Optional) Run built generator if it further generates site
+      - name: Run built generator 
         run: ./tmp/main generate || true
 
       - name: Verify public exists
