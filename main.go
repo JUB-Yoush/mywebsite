@@ -31,12 +31,6 @@ type Post struct {
 	html      templ.Component
 }
 
-type Page struct {
-	pathStr            string
-	relativePathToRoot string
-	template           TemplTemplate
-}
-
 type Posts []*Post
 
 var tagMap map[string]bool = make(map[string]bool)

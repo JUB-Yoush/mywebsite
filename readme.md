@@ -1,4 +1,4 @@
-Bare minimum ssg for my blog https://jaydenpb.net/
+Static site generator for my blog https://jaydenpb.net/
 
 Uses go, templ, goldmark, and slug.
 

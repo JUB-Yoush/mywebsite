@@ -1,0 +1,3 @@
+- [ ] fix issue with nested blog tag filtering
+- [ ] add projects page
+- [ ] add to meet page
