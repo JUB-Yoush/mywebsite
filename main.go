@@ -143,11 +143,24 @@ func main() {
 
 	//non blog pages
 	GenerateStaticPage(rootPath, "", homeContent, false)
-	GenerateStaticPage(path.Join(rootPath, "about"), "../", aboutContent, true)
 	GenerateStaticPage(path.Join(rootPath, "resume"), "../", resumeContent, true)
 	GenerateStaticPage(path.Join(rootPath, "mail"), "../", mailContent, true)
 	GenerateStaticPage(path.Join(rootPath, "projects"), "../", projectContent, true)
 	GenerateStaticPage(path.Join(rootPath, "contact"), "../", contactContent, true)
+
+	// make page for about
+	GenerateStaticPage(path.Join(rootPath, "about"), "../", aboutContent, true)
+
+	if err := os.Mkdir(path.Join(rootPath, "about"), 0755); err != nil {
+		log.Fatalf("failed to create output directory: %v", err)
+	}
+
+	name := path.Join(path.Join(rootPath, "about"), "index.html")
+	f, err := os.Create(name)
+	err = boilerplate(template(), "", relativePathToRoot).Render(context.Background(), f)
+	if err != nil {
+		log.Fatalf("failed to create output file: %v", err)
+	}
 
 	// make page for each post
 	posts := parseMarkdownPosts()
