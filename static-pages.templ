@@ -158,8 +158,8 @@ Hi
 
 <p> This is a site I built using a simple ssg I hacked together.</p>
 
-<p>While you're here, feel free to learn more <a href="/about">about me</a>, check out what I'm <a href="/projects">up to</a> or what I'm <a href="/blog">thinking about</a>.</p>
-
+<p>Feel free to learn about what I'm <a href="/about">up to</a>, check out what I've <a href="/projects">been up to</a> or what I'm <a href="/blog">thinking about</a>.</p>
+<p>When I'm not working, you can find me <a  id="hobby" class="hobby-anchor" href="javascript:;" onclick="next_hobby()">current_hobby.</a></p>
 <p> Thanks for stopping by. </p>
 
 <div class="box">
@@ -167,13 +167,14 @@ Hi
 <br>
 <br>
 </p>
-New Graduate (or internship I guess) roles for Winter or Summer 2026.
+New Graduate (or internship I guess) roles for starting from May 2026.
 </div>
 
 <script src="js/home.js"></script>
+<script src="../js/about.js"> </script>
 }
 
-templ aboutContent(post *Post){
+templ aboutContent(jjpa []*Post){
 <style>
 
 .about-img {
@@ -186,7 +187,6 @@ templ aboutContent(post *Post){
 </style>
 <title>About</title>
 <meta property="og:title" content="About">
-<script src="../js/about.js"> </script>
 
 <h1 > ~/about_me </h1> 
 
@@ -197,25 +197,34 @@ templ aboutContent(post *Post){
 <br>
 
 <p>I'm Jayden, a computer science student at York University.
-I'm a certified Digital Doohickey Maker to some, Software Engineer to others.</p>
+I'm a Digital Doohickey craftsman to some, Software Engineer to others.</p>
 
 <p>
 I've been in love with programming and creating with computers since modifying old Nintendo games and consoles with fan-made hacking tools (don't look for my old starmen.net account, my Earthbound hacks were very bad).
 </p>
 
 <p>
-I got my start proper with using Gamemaker 8.1 in grade 10 to make simple games, and that's when my interest in programming really began.
-</p>
-
-<p>
-Since then I've founded <a href="https://gdyu.itch.io/">York's game development club</a> learned full-stack development, got good at OOP, and have experience with many different tools and languages, and professional internship experience at companies like Scotiabank and Google (see my <a href="resume/">resume!</a>)
+I've founded <a href="https://gdyu.itch.io/">York's game development club</a>, learned a lot more about how software works, and have experience with many different tools and languages, and professional internship experience at companies like Scotiabank and Google (see my <a href="resume/">resume!</a>)
 </p>
 
 <p>
 I'm a fan of programming and creating things in many forms, and am always looking for opportunities to use code to make interesting, expressive, artistic, and cool stuff.
 </p>
 
-<p>When I'm not working, you can find me <a  id="hobby" class="hobby-anchor" href="javascript:;" onclick="next_hobby()">current_hobby.</a></p>
+<h1 > What I'm up to right now: </h1> 
+@jjpa[0].html
+<h4> personal update archive </h4> 
+<ul>
+	for i, post := range jjpa   {
+		if i != 0{
+
+			<li>
+			<a class="blog-title" href={"/blog/"+templ.SafeURL(post.permaLink) }>{ post.title }</a>
+			</li>
+		}
+	}
+</ul>
+
 }
 
 

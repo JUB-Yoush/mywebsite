@@ -124,6 +124,33 @@ func GenerateStaticPage(pathStr, relativePathToRoot string, template TemplTempla
 	}
 }
 
+func getJjpas(allPosts []*Post) (jjpas []*Post) {
+	for _, post := range allPosts {
+		for _, tag := range post.tags {
+			if tag == "jjpa" {
+				jjpas = append(jjpas, post)
+			}
+		}
+	}
+	return jjpas
+}
+
+func notJjpas(allPosts []*Post) (notJjpa []*Post) {
+
+	for _, post := range allPosts {
+		hasjjpa := false
+		for _, tag := range post.tags {
+			if tag == "jjpa" {
+				hasjjpa = true
+			}
+		}
+		if !hasjjpa {
+			notJjpa = append(notJjpa, post)
+		}
+	}
+	return notJjpa
+}
+
 func main() {
 	rootPath := "public"
 	blogPath := "public/blog"
@@ -149,24 +176,14 @@ func main() {
 	GenerateStaticPage(path.Join(rootPath, "contact"), "../", contactContent, true)
 
 	// make page for about
-	GenerateStaticPage(path.Join(rootPath, "about"), "../", aboutContent, true)
-
-	if err := os.Mkdir(path.Join(rootPath, "about"), 0755); err != nil {
-		log.Fatalf("failed to create output directory: %v", err)
-	}
-
-	name := path.Join(path.Join(rootPath, "about"), "index.html")
-	f, err := os.Create(name)
-	err = boilerplate(template(), "", relativePathToRoot).Render(context.Background(), f)
-	if err != nil {
-		log.Fatalf("failed to create output file: %v", err)
-	}
+	//GenerateStaticPage(path.Join(rootPath, "about"), "../", aboutContent, true)
 
 	// make page for each post
 	posts := parseMarkdownPosts()
 	// sort posts by date oldest to newest
 	sort.Sort(Posts(posts))
 	sort.Strings(tags)
+	nonJjpa := notJjpas(posts)
 	// every blog post
 	for _, post := range posts {
 		dir := path.Join(blogPath, post.date.Format("2006/01/02"), slug.Make(post.title))
@@ -186,10 +203,22 @@ func main() {
 		}
 	}
 
-	// // BLOG index page (all)
-	name := path.Join(blogPath, "index.html")
+	if err := os.Mkdir(path.Join(rootPath, "about"), 0755); err != nil {
+		log.Fatalf("failed to create output directory: %v", err)
+	}
+	jjpas := getJjpas(posts)
+
+	name := path.Join(path.Join(rootPath, "about"), "index.html")
 	f, err := os.Create(name)
-	err = boilerplate(blogPostsContent(posts, tags, "", true), "", "../").Render(context.Background(), f)
+	err = boilerplate(aboutContent(jjpas), "", "../").Render(context.Background(), f)
+	if err != nil {
+		log.Fatalf("failed to create output file: %v", err)
+	}
+
+	// // BLOG index page (all)
+	name = path.Join(blogPath, "index.html")
+	f, err = os.Create(name)
+	err = boilerplate(blogPostsContent(nonJjpa, tags, "", true), "", "../").Render(context.Background(), f)
 	if err != nil {
 		log.Fatalf("failed to create output file: %v", err)
 	}

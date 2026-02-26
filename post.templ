@@ -69,7 +69,7 @@ templ blogPostsContent(posts []*Post, tags []string, singleTag string, renderTag
 				<a class="blog-title" href={ templ.SafeURL(post.permaLink) }>{ post.title }</a>
 				<p>{post.dateStr} </p>
 				for _, tag := range post.tags {
-					<a class="inline-tag" href={"collection/"+tag}>#{tag}</a>
+					<a class="inline-tag" href={"/blog/collection/"+tag}>#{tag}</a>
 				}
 				</li>
 				}
