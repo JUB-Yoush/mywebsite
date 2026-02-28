@@ -1,9 +1,7 @@
 ---
 title: 'Book Review #1'
 date: '2023-10-17'
-tags: 
-    - reading 
-    - review
+tags: ['reading', 'review']
 ---
 
 ---

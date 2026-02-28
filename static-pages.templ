@@ -106,7 +106,7 @@ templ boilerplate(content templ.Component, viewClass string, pathToRoot string){
 				<a class="" href="/contact">contact</a>
 				<a class="" href="https://github.com/JUB-Yoush" target="_blank">github</a>
 				<a class="" href="https://yoush.itch.io/" target="_blank">itch.io</a>
-				<a class="" href="/">rss (TODO)</a>
+				<a class="" href="/rss/rss.xml">rss</a>
 			</div>
 			<div></div>
 		</footer>
@@ -144,7 +144,7 @@ templ homeContent(){
 
 <img id="home_gif_id" class="home_gif" src="" alt="">
 <br>
-<a id="gif_caption" class="gif-changer" href="javascript:;" onclick="change_gif()">gif_caption</a>
+<a id="gif_caption" class="gif-changer" href="javascript:;" onclick="change_gif()">Seems like you have JS disabled.</a>
 
 <br>
 <br>
@@ -155,11 +155,10 @@ Hi
 
 <p> I'm Jayden, a computer science student at the Lassonde school of Engineering (a school at York University) </p>
 
-
 <p> This is a site I built using a simple ssg I hacked together.</p>
 
-<p>Feel free to learn about what I'm <a href="/about">up to</a>, check out what I've <a href="/projects">been up to</a> or what I'm <a href="/blog">thinking about</a>.</p>
-<p>When I'm not working, you can find me <a  id="hobby" class="hobby-anchor" href="javascript:;" onclick="next_hobby()">current_hobby.</a></p>
+<p>Feel free to learn about what I'm <a href="/about">up to</a>, what I've <a href="/projects">been up to</a> or what I'm <a href="/blog">thinking about</a>.</p>
+<p>When I'm not working, you can find me <a  id="hobby" class="hobby-anchor" href="javascript:;" onclick="next_hobby()">(Seems like you have JS disabled).</a></p>
 <p> Thanks for stopping by. </p>
 
 <div class="box">
@@ -167,7 +166,7 @@ Hi
 <br>
 <br>
 </p>
-New Graduate (or internship I guess) roles for starting from May 2026.
+New Graduate or internship roles for starting from May 2026.
 </div>
 
 <script src="js/home.js"></script>

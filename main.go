@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"fmt"
@@ -135,7 +136,7 @@ func getJjpas(allPosts []*Post) (jjpas []*Post) {
 	return jjpas
 }
 
-func notJjpas(allPosts []*Post) (notJjpa []*Post) {
+func FilterNonJJPAPosts(allPosts []*Post) (notJjpa []*Post) {
 
 	for _, post := range allPosts {
 		hasjjpa := false
@@ -175,15 +176,12 @@ func main() {
 	GenerateStaticPage(path.Join(rootPath, "projects"), "../", projectContent, true)
 	GenerateStaticPage(path.Join(rootPath, "contact"), "../", contactContent, true)
 
-	// make page for about
-	//GenerateStaticPage(path.Join(rootPath, "about"), "../", aboutContent, true)
-
 	// make page for each post
 	posts := parseMarkdownPosts()
 	// sort posts by date oldest to newest
 	sort.Sort(Posts(posts))
 	sort.Strings(tags)
-	nonJjpa := notJjpas(posts)
+	nonJjpaPosts := FilterNonJJPAPosts(posts)
 	// every blog post
 	for _, post := range posts {
 		dir := path.Join(blogPath, post.date.Format("2006/01/02"), slug.Make(post.title))
@@ -206,11 +204,11 @@ func main() {
 	if err := os.Mkdir(path.Join(rootPath, "about"), 0755); err != nil {
 		log.Fatalf("failed to create output directory: %v", err)
 	}
-	jjpas := getJjpas(posts)
+	jjpaPosts := getJjpas(posts)
 
 	name := path.Join(path.Join(rootPath, "about"), "index.html")
 	f, err := os.Create(name)
-	err = boilerplate(aboutContent(jjpas), "", "../").Render(context.Background(), f)
+	err = boilerplate(aboutContent(jjpaPosts), "", "../").Render(context.Background(), f)
 	if err != nil {
 		log.Fatalf("failed to create output file: %v", err)
 	}
@@ -218,7 +216,7 @@ func main() {
 	// // BLOG index page (all)
 	name = path.Join(blogPath, "index.html")
 	f, err = os.Create(name)
-	err = boilerplate(blogPostsContent(nonJjpa, tags, "", true), "", "../").Render(context.Background(), f)
+	err = boilerplate(blogPostsContent(nonJjpaPosts, tags, "", true), "", "../").Render(context.Background(), f)
 	if err != nil {
 		log.Fatalf("failed to create output file: %v", err)
 	}
@@ -243,6 +241,41 @@ func main() {
 			log.Fatalf("failed to create output file: %v", err)
 		}
 
+	}
+
+	//generate rss xml
+	var buf bytes.Buffer
+	rss := bufio.NewWriter(&buf)
+	rss.WriteString(fmt.Sprintln("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"))
+	rss.WriteString(fmt.Sprintln("\t<rss version=\"2.0\">"))
+	rss.WriteString(fmt.Sprintln("\t<channel>"))
+	rss.WriteString(fmt.Sprintln("\t\t<title>Jaydenpb.net</title>"))
+	rss.WriteString(fmt.Sprintln("\t\t<language>en-us</language>"))
+	rss.WriteString(fmt.Sprintln("\t\t<description>Jayden Brooks' Personal Blog </description>"))
+	for _, post := range posts {
+		rss.WriteString(fmt.Sprintf("\t\t<item>\n"))
+		rss.WriteString(fmt.Sprintf("\t\t\t<title>%s</title>\n", post.title))
+		rss.WriteString(fmt.Sprintf("\t\t\t<link>%s/index.html</link>\n", post.permaLink))
+		rss.WriteString(fmt.Sprintf("\t\t\t<pubDate>%s</pubDate>\n", post.dateStr))
+		rss.WriteString(fmt.Sprintf("\t\t</item>\n"))
+	}
+	rss.WriteString("\t</channel>\n")
+	rss.WriteString("\t</rss>\n")
+
+	if err := rss.Flush(); err != nil {
+		log.Fatalf("couldn't flush buffer %v", err)
+	}
+
+	data := buf.Bytes()
+
+	if err := os.Mkdir("public/rss", 0755); err != nil {
+		log.Fatalf("failed to create output directory: %v", err)
+	}
+
+	name = path.Join("public", "rss", "rss.xml")
+	err = os.WriteFile(name, data, 0644)
+	if err != nil {
+		log.Fatalf("failed to create output file: %v", err)
 	}
 
 }
