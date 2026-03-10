@@ -268,11 +268,11 @@ func main() {
 
 	data := buf.Bytes()
 
-	if err := os.Mkdir("public/rss", 0755); err != nil {
-		log.Fatalf("failed to create output directory: %v", err)
-	}
+	// if err := os.Mkdir("public/rss", 0755); err != nil {
+	// 	log.Fatalf("failed to create output directory: %v", err)
+	// }
 
-	name = path.Join("public", "rss", "rss.xml")
+	name = path.Join("public", "rss.xml")
 	err = os.WriteFile(name, data, 0644)
 	if err != nil {
 		log.Fatalf("failed to create output file: %v", err)
