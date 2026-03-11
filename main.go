@@ -255,7 +255,7 @@ func main() {
 	for _, post := range posts {
 		rss.WriteString(fmt.Sprintf("\t\t<item>\n"))
 		rss.WriteString(fmt.Sprintf("\t\t\t<title>%s</title>\n", post.title))
-		rss.WriteString(fmt.Sprintf("\t\t\t<link>%s/index.html</link>\n", post.permaLink))
+		rss.WriteString(fmt.Sprintf("\t\t\t<link>%s/index.html</link>\n", "blog/"+post.permaLink))
 		rss.WriteString(fmt.Sprintf("\t\t\t<pubDate>%s</pubDate>\n", post.dateStr))
 		rss.WriteString(fmt.Sprintf("\t\t</item>\n"))
 	}
