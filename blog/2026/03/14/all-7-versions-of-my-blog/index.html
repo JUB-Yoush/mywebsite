@@ -1,0 +1,116 @@
+<style>
+	main {
+		margin-top: 15vh;
+		width: 100vw;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.navbar {
+		padding-right: 1.5rem;
+		padding-top: 16px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		text-align: right;
+	}
+	.navbar a {
+		margin-bottom: 0.5rem;
+	}
+	.content-wrapper {
+		max-width: 800px;
+		width: 60vw;
+		min-width: 320px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+	.content-wrapper.blog {
+		width: 80vw;
+		max-width: 1200px;
+	}
+	div > span {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding-bottom: 8px;
+	}
+	.footer-links {
+		margin-top: 8px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	@media only screen and (max-width: 600px) {
+		main {
+			flex-direction: column;
+			margin-top: min(5vh, 30px);
+			margin-left: min(5vw, 60px);
+		}
+		.navbar {
+			flex-direction: row;
+			text-align: left;
+			justify-content: center;
+		}
+		.content-wrapper {
+			width: 90vw;
+		}
+		.navbar a {
+			margin-right: 12px;
+		}
+	}
+
+</style><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><link rel="stylesheet" href="../../../../../css/reset.css"><link rel="stylesheet" href="../../../../../css/main.css"><link rel="stylesheet" href="../../../../../css/font.css"><link rel="stylesheet" href="../../../../../css/code.css"><link rel="icon" type="image/x-icon" href="../../../../../favicon.ico"></head><main><nav class="blog navbar"><a class="" href="/">~</a> <a href="/about/">about</a> <a href="/resume/">hire me 😳</a> <a href="/projects/">projects</a> <a class="" href="/mail/">mail list</a> <a href="/blog/">blog</a> <a id="theme" onclick="change_theme()">theme</a></nav><div class="blog content-wrapper"><span>+-------------+</span><head><title>All 7 Versions of my blog</title></head><body><h1>All 7 Versions of my blog</h1><div class="content"><p><a href="https://youtu.be/B6ltSXD9eMU?si=uDPtXN3Y5XAThYBa">Fraud was sick play the update</a></p>
+<h1>History of my Personal Sites</h1>
+<p>I remade my blog again so here is a history of every version of my blog that has ever existed.</p>
+<h2>Ghost, 10/2021</h2>
+<p>My first website was made using <a href="https://ghost.org/">Ghost</a> simply because <a href="https://youtu.be/acBJsjCqgtM?si=vkAEhL0LO6hMxXJc">Ali Abdaal</a> told me to use it and he was the authority I was listening to at the time. He only mentions the price of the hosted solution and doesn't mention you can host it yourself at all (he does mention that it's open source).</p>
+<p>Throughout the entire video He never mentions a static generator, with Ghost being the recommendation for people who &quot;know a little bit about computers&quot;. I was already familiar with HTML back in 2021, but I thought making a website in HTML was like writing a native application in x86 assembly, something that was impractical and abstracted away by modern tools that &quot;real&quot; developers use. I did not know markdown nor HTML templates existed so I was under the impression that the only ways to author content for the web was writing articles in a webpage with a cms based system like WordPress/Ghost, or just writing HTML by hand.</p>
+<p>I didn't end up sticking with the Ghost site for very long at all. I think I wrote my Drawabox blog post (which I <a href="https://jaydenpb.netblog/2022/01/21/yb1-draw-the-box-now-do-it-249-more-times/">recently archived</a> there first and then re-wrote it in WordPress but I cant remember. I remember I found the process of configuring a <a href="https://www.digitalocean.com/">DigitalOcean</a> droplet to host the site kind of confusing.</p>
+<h2>WordPress, 01/2022</h2>
+<p>I decided to go with a <a href="https://wordpress.org/">WordPress</a> site over a Ghost one, simply because it was easier to set up in DigitalOcean and I found a theme that I preferred to anything ghost offered (I remember at the time Ghost only had like, 2?).</p>
+<p>I wrote my first two blog posts: one on Drawabox and one on Godot (which I also <a href="https://jaydenpb.net/blog/2022/03/22/yb2-i-used-godot-for-three-years-and-learned-nothing-here-is-how-to-avoid-that/">recently archived</a>).</p>
+<h2>Raw html, 03/2022</h2>
+<p>I was kind of in the peak of my &quot;Emulating everything <a href="https://www.youtube.com/@jvscholz">James Scholz</a> does&quot; era, which actually did help make large sweeping valuable changes to my life. Of all the role models I could've found at the time, he was a really good one. I don't watch him much nowadays (to be fair, don't watch much of anyone on YouTube anymore) as I feel like I was too caught up in feelings of comparison, of all of me compared to the version of himself who I had extrapolated based on what he presented of himself publicly. Wasn't very healthy for me.</p>
+<p>Anyway part of that emulation involved his website which I blatantly stole. His site still lives <a href="https://jvscholz.com/">here</a> although it seems outdated. I could only assume he simply wrote HTML files directly and that's what I did as well. It worked fine, I had a blog page set up but didn't write anything, as my old posts were written in the WordPress cms.</p>
+<h2>Frozen flask site, 01/2023</h2>
+<p>Baby's first generated static site! My motivation was mostly wanting a way to make blog posts within a static site without writing html by hand. I had browsed a bit around with static site generators like <a href="https://gohugo.io/">Hugo</a> and <a href="https://jekyllrb.com/">Jekyll</a> but didn't like how they were theme based, I wanted to design the website myself with HTML templates (but I didn't know what those were at the time).</p>
+<p>I was familiar with <a href="https://flask.palletsprojects.com/en/stable/">Flask</a> through it's use at a hackathon I had participated in not long before. It taught me about <a href="https://jinja.palletsprojects.com/en/stable/templates/">Jinja</a> HTML templates. Exactly what I was looking for! I ended up making a site using the <a href="https://frozen-flask.readthedocs.io/en/stable/index.html">flask-freeze</a> package that would walk through all your api endpoints and pre-render a HTML page for each one. I had followed a tutorial to set it up but I can no longer find it unfortunately.</p>
+<p>The web design of this version of the site is just about the same as the current, with some slight alterations. This design was also blatantly stolen from Quinn Ha's previous personal site, but he's since abandoned it for a different much more <a href="https://www.quinnha.menu/">inspired design</a>, I had stolen his site on a whim after discovering his LinkedIn page, and in the smallest of worlds coincidences, one of his friends ended up interning with me at Scotiabank and asked me why my site looked so much like Quinns. I was then reached out to Quinn and he gave he his blessing for my plagiarism, he also helped with preparing for my Google Internship, as he was there the summer before me.</p>
+<h2>SvelteKit + Vercel, 03/2023</h2>
+<p>I'm something of a contrarian. Or I'm a fan of picking the best tools rather, even if they aren't popular (which they often aren't). Sometimes the popular things end up being the best, like when I switched from Emacs Org mode to Obsidian (although .org is still great and preferable to a certain kind of hacker for sure). Anyway when it finally came time to learn about JavaScript frameworks I gravitated towards <a href="https://svelte.dev/">Svelte</a> over the ever ubiquitous <a href="https://react.dev/">React</a> simply because people on the internet said it was better. This is just about the same reason I ended up learning Godot instead of Unity.</p>
+<p>Overall I think my propensity to lean towards niche tools has been a net good, as it's allowed me to gain perspective working with a wider range of tools while still being forced to interact with popular defaults as they're popular and the default. React has an absolute monopoly on front-end JavaScript frameworks despite only really being the best at being popular, so from solely a career perspective it doesn't really make much sense to learn anything else unfortunately.</p>
+<p>I re-wrote the flask site as a server-less <a href="https://svelte.dev/docs/kit/introduction">SvelteKit</a> application and hosted it for free on <a href="https://vercel.com">Vercel</a>. I mostly followed the <a href="https://joshcollinsworth.com/blog/build-static-sveltekit-markdown-blog">excellent blog post</a> From Josh Collinsworth, who also recently happened to hit the nail on the head on exactly how I feel about the current <a href="https://joshcollinsworth.com/blog/sloptimism">ai slop world we find ourselves in</a>. Also consider reading what <a href="https://www.journal.stuffwithstuff.com/2026/01/24/the-value-of-things/">Bob Nystrom wrote</a> for a different angle on the topic I also really like.</p>
+<h2>SvelteKit-Static + gh-pages, 04/2024</h2>
+<p>Eventually I had learned about static hosting and <a href="https://docs.github.com/en/pages">Github Pages</a>. Vercel was cool and free but I didn't really understand how &quot;serverless&quot; architecture worked (I still don't really), and idea of having pre-rendered html pages that github rendered for me made sense. Not having to concern myself with two separate platforms was also great.</p>
+<p>When I was remaking the GDYU website I had used SvelteKit and modeled it after what I learned from making my site, I did start with static exporting from the jump, and after finishing that, retroactively remade my site with static rendering. This is the version of the site that I had used for the longest.</p>
+<h2>Go + Templ, 02/2026</h2>
+<p>And now we've gone full circle.</p>
+<p>Going from HTML templates to dynamic full-stack frontend framework in vercel to statically generated front end framework site back to HTML templates feels like I've finally reached the enlightenment end of the Soyjack bell-curve meme.</p>
+<p>SvelteKit is designed for dynamic server based production web applications. Not static blogs like mine. That's not to say you can't make simple static blog in SvelteKit, and of all the metaframeworks I've used it's very beginner friendly and grows with your understanding. But using a JavaScript metaframework to parse some markdown and render some html is like using a shotgun to kill a housefly. Looking over my repository there are a bunch of configuration files and 62.7MB of node modules who's purpose in the creation of the site I couldn't communicate to you. Not to say it was super complex, if I reviewed modern JS stuff and read over the code again I could probably figured it out, but I remembered how my site used to just be writing html by hand, how complicated should making a my site be?</p>
+<p>I think one of the best things that switching to <a href="https://www.raylib.com/index.html">Raylib</a> for game development has taught me is that a lot of the complexity we're used to working within is optional. I think a lot of &quot;best practices&quot; and popular tools/engines lead to complicated software, as they're designed with the patterns and solution that assume you need the complexity.</p>
+<p>I don't think SvelteKit or Unity should be simpler, When you're programming something that takes advantage of the broad toolset they provide it can be a tremendous asset. But when I consider a project's technology I now tend to pick tools based on my specific needs, not just opt in for the big &quot;do everything&quot; tool people tend to pick. And I've found that I often don't need a lot of the stuff the big tools tend to give you. I'm quite happy writing simple code, that solves my simple problems, with minimal dependencies.</p>
+<p>With this, I set out to remake my website with technology I could understand.</p>
+<p>My new site is created with <a href="https://go.dev/">Go</a> + <a href="https://templ.guide/">Templ templates</a> (I could get away with using the regular html Go templates, but I like Templ files).
+The &quot;site generator&quot; is one <code>main.go</code> file that does the following:</p>
+<ul>
+<li>create a folder called /public.</li>
+<li>copy over the static folder that contains css/js/images into /public.</li>
+<li>create subdirectories for each route within /public.</li>
+<li>write the index.html page for each static pages using templ templates.</li>
+<li>parse my folder of markdown posts into structs containing their html + metadata with <a href="https://github.com/yuin/goldmark">goldmark</a>.</li>
+<li>generate a directory for the post + write it's content.</li>
+<li>make a page filtering posts by every tag.</li>
+<li>write an rss file.</li>
+</ul>
+<p>And all I have to do is serve the static site in public. The deployment file for github pages automatically builds the site and hosts the content with /public being the root.</p>
+<p>The only major features I'd like but haven't implemented yet would be having foonotes displayed inline to the left/below paragraphs but that would require me to parse the AST of goldmark (which isn't that bad, I just haven't gotten to it yet.), But I'm very happy with the current state of my blog and think this style (bespoke ssg that copies and writes files directly) is what I'll stick with.</p>
+<p>End of blog post CTA: If you have a super cool blog (and are also a game developer in the Toronto Area) then consider including your site in the new <a href="https://webring.jaydenpb.net/">Toronto Gamedev Webring</a> I put together. Please! It can't just be me and Alvin in there forever!</p>
+</div></body><footer class="footer-links"><span>+-------------+</span><div><a href="https://github.com/JUB-Yoush/mywebsite">site source</a> <a class="" href="/contact">contact</a> <a class="" href="https://github.com/JUB-Yoush" target="_blank">github</a> <a class="" href="https://yoush.itch.io/" target="_blank">itch.io</a> <a class="" href="/rss.xml">rss</a></div><div style="display: flex; align-items: center; gap: 8px; padding-top: 16px;"><a href="https://webring.jaydenpb.net/#jaydenpb.net?nav=prev">←</a> <a href="https://webring.jaydenpb.net" target="_blank"><div style="border: 1px solid black;
+					display: flex; flex-direction: row;  
+						"><img style="width: 65px;" src="https://webring.jaydenpb.net/img/cntower.svg" alt="CS Webring" style="width: 24px; height: auto; opacity: 0.8;"><p style="max-width: 50px; font-size: 16px; font-family:monospace;">TOR GDC RING</p></div></a> <a href="https://webring.jaydenpb.net/#jaydenpb.net?nav=next">→</a></div><div></div></footer></div></main><script src="../../../../../js/theme.js"></script></html>
