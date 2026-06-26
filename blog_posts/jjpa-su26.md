@@ -1,6 +1,6 @@
 ---
 title: 'Jayden Journal Public Access: Summer 2026'
-date: '2025-06-25'
+date: '2026-06-25'
 tags: ['jjpa', 'reflection']
 ---
 
