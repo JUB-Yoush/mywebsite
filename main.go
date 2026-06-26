@@ -34,8 +34,10 @@ type Post struct {
 
 type Posts []*Post
 
-var tagMap map[string]bool = make(map[string]bool)
-var tags []string
+var (
+	tagMap map[string]bool = make(map[string]bool)
+	tags   []string
+)
 
 func (e Posts) Len() int {
 	return len(e)
@@ -57,7 +59,6 @@ func mdToHtml(html string) templ.Component {
 }
 
 func parseMarkdownPosts() (posts []*Post) {
-
 	// turn markdown file into struct
 	markdown := goldmark.New(
 		goldmark.WithExtensions(
@@ -110,9 +111,10 @@ func parseMarkdownPosts() (posts []*Post) {
 	}
 	return posts
 }
+
 func GenerateStaticPage(pathStr, relativePathToRoot string, template TemplTemplate, makeFolder bool) {
 	if makeFolder {
-		if err := os.Mkdir(pathStr, 0755); err != nil {
+		if err := os.Mkdir(pathStr, 0o755); err != nil {
 			log.Fatalf("failed to create output directory: %v", err)
 		}
 	}
@@ -137,7 +139,6 @@ func getJjpas(allPosts []*Post) (jjpas []*Post) {
 }
 
 func FilterNonJJPAPosts(allPosts []*Post) (notJjpa []*Post) {
-
 	for _, post := range allPosts {
 		hasjjpa := false
 		for _, tag := range post.tags {
@@ -160,7 +161,7 @@ func main() {
 	// wipe public folder (should a makefile handle this?)
 	os.RemoveAll(rootPath)
 
-	if err := os.Mkdir(rootPath, 0755); err != nil {
+	if err := os.Mkdir(rootPath, 0o755); err != nil {
 		log.Fatalf("failed to create output directory: %v", err)
 	}
 
@@ -169,7 +170,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	//non blog pages
+	// non blog pages
 	GenerateStaticPage(rootPath, "", homeContent, false)
 	GenerateStaticPage(path.Join(rootPath, "resume"), "../", resumeContent, true)
 	GenerateStaticPage(path.Join(rootPath, "mail"), "../", mailContent, true)
@@ -185,7 +186,7 @@ func main() {
 	// every blog post
 	for _, post := range posts {
 		dir := path.Join(blogPath, post.date.Format("2006/01/02"), slug.Make(post.title))
-		if err := os.MkdirAll(dir, 0755); err != nil && err != os.ErrExist {
+		if err := os.MkdirAll(dir, 0o755); err != nil && err != os.ErrExist {
 			log.Fatalf("failed to create dir %q: %v", dir, err)
 		}
 		name := path.Join(dir, "index.html")
@@ -195,13 +196,12 @@ func main() {
 		}
 
 		err = boilerplate(contentPage(post), "blog", "../../../../../").Render(context.Background(), f)
-
 		if err != nil {
 			log.Fatalf("failed to write output file: %v", err)
 		}
 	}
 
-	if err := os.Mkdir(path.Join(rootPath, "about"), 0755); err != nil {
+	if err := os.Mkdir(path.Join(rootPath, "about"), 0o755); err != nil {
 		log.Fatalf("failed to create output directory: %v", err)
 	}
 	jjpaPosts := getJjpas(posts)
@@ -224,13 +224,13 @@ func main() {
 	// TAG collections pages
 	collections := path.Join("public", "blog", "collection")
 
-	if err := os.Mkdir(collections, 0755); err != nil {
+	if err := os.Mkdir(collections, 0o755); err != nil {
 		log.Fatalf("failed to create output directory: %v", err)
 	}
 	for _, tag := range tags {
 		collectionPath := path.Join("public", "blog", "collection", tag)
 
-		if err := os.Mkdir(collectionPath, 0755); err != nil {
+		if err := os.Mkdir(collectionPath, 0o755); err != nil {
 			log.Fatalf("failed to create output directory: %v", err)
 		}
 
@@ -243,7 +243,7 @@ func main() {
 
 	}
 
-	//generate rss xml
+	// generate rss xml
 	var buf bytes.Buffer
 	rss := bufio.NewWriter(&buf)
 	rss.WriteString(fmt.Sprintln("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"))
@@ -273,9 +273,8 @@ func main() {
 	// }
 
 	name = path.Join("public", "rss.xml")
-	err = os.WriteFile(name, data, 0644)
+	err = os.WriteFile(name, data, 0o644)
 	if err != nil {
 		log.Fatalf("failed to create output file: %v", err)
 	}
-
 }

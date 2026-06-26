@@ -1,8 +1,8 @@
 module blog_ssg
 
-go 1.24
+go 1.25.0
 
-require github.com/a-h/templ v0.3.977
+require github.com/a-h/templ v0.3.1020
 
 require (
 	github.com/gosimple/slug v1.15.0 // indirect

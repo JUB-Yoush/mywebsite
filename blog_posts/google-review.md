@@ -86,7 +86,7 @@ Some sports require a lot more infrastructure than others, and that requires you
 
 ## 9. Katy Perry was right actually
 
-Or I guess the beach boys beat her to it, although they have opinions on girls all over america, seems like a lot of generalizing, someone should let these artists know that girls are individuals!
+Or I guess the beach boys beat her to it, although they have opinions on girls all over America, seems like a lot of generalizing, someone should let these artists know that girls are individuals!
 But some of those individual girls, irrespective of state/geography of origin or current residence,
 
 ...are undeniable.
