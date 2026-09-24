@@ -8,7 +8,7 @@ tags: ['jjpa', 'reflection']
 
 I'm writing this on my birthday (09/24), Happy birthday me!
 
-I've been working full time since July, and have been adjusting to full time working life. Work mostly what I'd describe as "webdev plumbing", simple, important, but not super complicated. It's very comfortable and compensates me well. In this economy and state of the wider technology industry it's much more than I could ask for or expect. I'm very grateful for the opportunity.
+I've been working full time since July, and have been adjusting to full time working life. Work is mostly what I'd describe as "webdev plumbing", simple, important, not super complicated. Working here is very comfortable and compensates me well. In this economy and state of the wider technology industry it's much more than I could ask for or expect. I'm very grateful for the opportunity.
 
 I've somewhat eased into full time working and am very aware of the time I have in my schedule to fit in game development. Ironically I think I've been doing more Game Dev now then when I was a student? [Wawaworks](https://wawa.jaydenpb.net/) has released our Demo [Fell Noon](https://motherlusa.itch.io/fell-noon). We plan on continuing development so if you're interested, join our [mailing list](https://wawa.jaydenpb.net/) to be updated.
 
