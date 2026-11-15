@@ -236,7 +236,7 @@ func main() {
 
 		name = path.Join(collectionPath, "index.html")
 		f, err = os.Create(name)
-		err = boilerplate(blogPostsContent(posts, tags, tag, false), "", "../../../").Render(context.Background(), f)
+		err = boilerplate(blogPostsContent(posts, tags, tag, false), "", "../../../../").Render(context.Background(), f)
 		if err != nil {
 			log.Fatalf("failed to create output file: %v", err)
 		}
